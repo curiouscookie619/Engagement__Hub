@@ -140,6 +140,19 @@ def test_channel_owner_mapping_enforced():
     assert not failure.empty
 
 
+def test_channel_owner_outputs_are_canonical():
+    customer = make_customer()
+    a1 = make_activity("D1", "k1", channels=["Email"], PreferredChannel="Email")
+    a2 = make_activity("H1", "k2", channels=["Telecalling"], PreferredChannel="Telecalling", requires_human=True)
+    calendar, _ = run_calendar_engine(customer, pd.concat([a1, a2], ignore_index=True), reference_date=datetime(2024, 1, 1))
+
+    invalid = calendar[
+        (calendar["channel"].isin(["Email", "WhatsApp", "Portal", "SMS"]))
+        & (calendar["owner_type"].isin(["Field", "RM", "BranchOps"]))
+    ]
+    assert invalid.empty
+
+
 def test_allowed_channels_all_normalises():
     from activity_library import normalise_activity_library
     import pandas as pd
@@ -175,3 +188,61 @@ def test_allowed_channels_all_normalises():
     normalised = normalise_activity_library(df)
     channels = set(normalised.loc[0, "channels"])
     assert {"WhatsApp", "Email", "Portal", "Telecalling", "RMVisit", "Branch", "SMS", "Event / Webinar"}.issubset(channels)
+
+
+def test_life_stage_cap_when_persona_missing():
+    customer = make_customer(SafariPersona="", LifeStage="Young Adult")
+    act = make_activity(
+        "CAP",
+        "cap",
+        penalty_mode="SOFT",
+        priority=5,
+        Category="Servicing",
+        min_gap_activity_weeks=0,
+        life_stage_eligibility=[],
+        persona_eligibility=[],
+    )
+    calendar, log = run_calendar_engine(customer, act, reference_date=datetime(2024, 1, 1), planning_weeks=60)
+
+    assert len(calendar) == 20  # Young Adult life-stage cap
+    included = log[(log["activity_id"] == "CAP") & (log["result"] == "INCLUDED")]
+    assert "cap_source=LIFESTAGE" in included.iloc[0]["details"]
+
+
+def test_safari_cap_overrides_life_stage():
+    customer = make_customer(SafariPersona="Hawk", LifeStage="Young Adult")
+    act = make_activity(
+        "CAP",
+        "cap",
+        penalty_mode="SOFT",
+        priority=5,
+        Category="Servicing",
+        min_gap_activity_weeks=0,
+        life_stage_eligibility=[],
+        persona_eligibility=[],
+    )
+    calendar, log = run_calendar_engine(customer, act, reference_date=datetime(2024, 1, 1), planning_weeks=60)
+
+    assert len(calendar) == 28  # Hawk cap
+    included = log[(log["activity_id"] == "CAP") & (log["result"] == "INCLUDED")]
+    assert "cap_source=SAFARI" in included.iloc[0]["details"]
+
+
+def test_cap_fallback_default_with_warning():
+    customer = make_customer(SafariPersona="", LifeStage="")
+    act = make_activity(
+        "CAP",
+        "cap",
+        penalty_mode="SOFT",
+        priority=5,
+        Category="Servicing",
+        min_gap_activity_weeks=0,
+        life_stage_eligibility=[],
+        persona_eligibility=[],
+    )
+    calendar, log = run_calendar_engine(customer, act, reference_date=datetime(2024, 1, 1), planning_weeks=60)
+
+    assert len(calendar) == 18
+    included = log[(log["activity_id"] == "CAP") & (log["result"] == "INCLUDED")]
+    assert "cap_source=DEFAULT" in included.iloc[0]["details"]
+    assert "WARN_CAP_FALLBACK_DEFAULT" in included.iloc[0]["details"] or "WARN_CAP_FALLBACK_DEFAULT" in "|".join(calendar["reason_codes"])

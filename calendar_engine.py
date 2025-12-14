@@ -34,6 +34,8 @@ CATEGORY_PRECEDENCE_BONUS = {
 }
 
 SAFARI_CAPS = {"Lion": 24, "Hawk": 28, "Elephant": 26, "Deer": 30}
+LIFE_STAGE_CAPS = {"Young Adult": 20, "Early Nester": 24, "Mature Nester": 24, "Golden Preserver": 18}
+DEFAULT_CAP = 18
 
 REASON_CODES = {
     "FAIL_LIFESTAGE",
@@ -53,6 +55,7 @@ REASON_CODES = {
     "FAIL_CHANNEL_OWNER_MAPPING",
     "FAIL_VARIETY_KEY_MONTH_HARD",
     "WARN_VARIETY_KEY_RECENT_SOFT",
+    "WARN_CAP_FALLBACK_DEFAULT",
     "PASS_ELIGIBILITY",
     "PASS_MODIFIER",
     "PASS_CAP",
@@ -122,7 +125,20 @@ def run_calendar_engine(
     activities = activities.sort_values(["Priority", "ActivityID"], ascending=[False, True]).reset_index(drop=True)
 
     for _, customer in customer_profiles.sort_values("CustomerID").iterrows():
-        persona_cap = SAFARI_CAPS.get(customer.get("SafariPersona"), 0)
+        persona = customer.get("SafariPersona")
+        life_stage = customer.get("LifeStage")
+        cap_source = "DEFAULT"
+        persona_cap = DEFAULT_CAP
+        cap_reason_codes: List[str] = []
+        if persona in SAFARI_CAPS:
+            persona_cap = SAFARI_CAPS[persona]
+            cap_source = "SAFARI"
+        elif life_stage in LIFE_STAGE_CAPS:
+            persona_cap = LIFE_STAGE_CAPS[life_stage]
+            cap_source = "LIFESTAGE"
+        else:
+            cap_reason_codes.append("WARN_CAP_FALLBACK_DEFAULT")
+
         persona_count = 0
         category_counts: Dict[str, int] = {cat: 0 for cat in CATEGORY_CAPS}
         last_category_week: Dict[str, int] = {}
@@ -192,7 +208,13 @@ def run_calendar_engine(
                 penalty_mode = activity.get("repeat_penalty_mode", "HARD")
 
                 if persona_count >= persona_cap:
-                    _record_failure(decisions, aid, "CAP", "FAIL_PERSONA_CAP", "Safari persona cap reached")
+                    _record_failure(
+                        decisions,
+                        aid,
+                        "CAP",
+                        "FAIL_PERSONA_CAP",
+                        f"Cap reached from {cap_source} limit {persona_cap}",
+                    )
                     continue
                 cat_cap = CATEGORY_CAPS.get(category, {"max_per_year": 0, "cooldown_weeks": 0})
                 if category_counts.get(category, 0) >= cat_cap["max_per_year"]:
@@ -300,6 +322,7 @@ def run_calendar_engine(
             vkey = chosen.get("VarietyKey", "")
 
             base_reasons = base_reasons_map.get(aid, ["PASS_ELIGIBILITY", "PASS_MODIFIER"])
+            base_reasons = base_reasons + cap_reason_codes
 
             channel_options = chosen["channels"]
             if chosen.get("requires_human"):
@@ -361,7 +384,9 @@ def run_calendar_engine(
                 stage = "SCHEDULE"
                 result = "INCLUDED"
                 reason_code = "PASS_SCHEDULE"
-                details = f"weeks={','.join(entry['included'])}; reasons={'|'.join(sorted(entry['reasons']))}"
+                details = (
+                    f"weeks={','.join(entry['included'])}; reasons={'|'.join(sorted(entry['reasons']))}; cap_source={cap_source}"
+                )
             elif entry.get("failure"):
                 stage, reason_code, details = entry["failure"]
                 result = "EXCLUDED"

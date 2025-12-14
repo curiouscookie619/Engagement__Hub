@@ -20,6 +20,8 @@ CANONICAL_CHANNELS = [
     "Event / Webinar",
 ]
 
+HUMAN_CHANNELS = {"Telecalling", "RMVisit", "Branch", "Event / Webinar", "Webinar"}
+
 
 REQUIRED_COLUMNS = [
     "activity_id",
@@ -87,6 +89,14 @@ def normalise_activity_library(df: pd.DataFrame) -> pd.DataFrame:
     lib["channels"] = lib["allowed_channels"].fillna("").apply(normalise_channels)
     if lib["channels"].apply(len).eq(0).any():
         raise ValidationError("allowed_channels must not be empty; use ALL if unrestricted")
+
+    # requires_human rows must have at least one human-capable channel to avoid scheduling failures later
+    invalid_human = lib["requires_human"] & ~lib["channels"].apply(lambda ch: bool(set(ch) & HUMAN_CHANNELS))
+    if invalid_human.any():
+        bad_ids = lib.loc[invalid_human, "activity_id"].tolist()
+        raise ValidationError(
+            f"Activities requiring humans must include a human-capable channel (Telecalling/RMVisit/Branch/Event): {bad_ids}"
+        )
 
     # Eligibility lists
     lib["life_stage_eligibility"] = lib["eligible_life_stages"].fillna("").apply(_split_pipe)
