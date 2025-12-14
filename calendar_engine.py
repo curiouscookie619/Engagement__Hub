@@ -9,7 +9,7 @@ import pandas as pd
 
 VARIETY_RECENT_WINDOW_WEEKS = 8
 VARIETY_SOFT_PENALTY = 1000
-PLANNING_WEEKS = 12
+PLANNING_WEEKS = 52
 
 CATEGORY_CAPS = {
     "Everyday Life & Learning": {"max_per_year": 8, "cooldown_weeks": 1},
@@ -50,6 +50,7 @@ REASON_CODES = {
     "FAIL_CATEGORY_SPACING",
     "FAIL_GAP_SAME_ACTIVITY",
     "FAIL_GAP_SAME_THEME",
+    "FAIL_CHANNEL_OWNER_MAPPING",
     "FAIL_VARIETY_KEY_MONTH_HARD",
     "WARN_VARIETY_KEY_RECENT_SOFT",
     "PASS_ELIGIBILITY",
@@ -84,17 +85,24 @@ def _record_inclusion(decisions: Dict[str, Dict], activity_id: str, week_bucket:
     entry["reasons"].update(reason_codes)
 
 
-def _owner_for_channel(channel: str, requires_human: bool) -> str:
-    if channel is None:
+HUMAN_CHANNELS = {"Telecalling", "RMVisit", "Branch", "Event / Webinar", "Webinar"}
+DIGITAL_CHANNELS = {"WhatsApp", "Email", "Portal", "SMS"}
+
+
+def _owner_for_channel(channel: str) -> str:
+    if channel in {None, ""}:
         return "Digital"
-    if "Telecalling" in channel or channel == "SMS":
+    if channel == "Telecalling":
         return "CallCentre"
-    if "RMVisit" in channel:
+    if channel == "SMS":
+        return "CallCentre"
+    if channel == "RMVisit":
         return "RM"
     if channel == "Branch":
         return "BranchOps"
-    if requires_human:
-        return "Field"
+    if channel in {"Event / Webinar", "Webinar"}:
+        return "Digital"
+    # default digital channels
     return "Digital"
 
 
@@ -102,6 +110,7 @@ def run_calendar_engine(
     customer_profiles: pd.DataFrame,
     activities: pd.DataFrame,
     reference_date: datetime | None = None,
+    planning_weeks: int = PLANNING_WEEKS,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     reference = pd.Timestamp(reference_date if reference_date else datetime.utcnow().date())
     start_week = _week_start(reference)
@@ -121,8 +130,11 @@ def run_calendar_engine(
         last_theme_week: Dict[str, int] = {}
         variety_month_seen: Dict[Tuple[str, str], bool] = {}
         variety_recent_week: Dict[str, int] = {}
+        last_category_activity: Dict[str, str] = {}
+        last_theme_activity: Dict[str, str] = {}
 
         decisions: Dict[str, Dict] = {}
+        base_reasons_map: Dict[str, List[str]] = {}
 
         # Eligibility pass list
         eligible = []
@@ -163,19 +175,21 @@ def run_calendar_engine(
                 continue
 
             reasons.append("PASS_MODIFIER")
+            base_reasons_map[aid] = list(reasons)
             eligible.append((activity, reasons))
 
         # weekly scheduling
-        for week_idx in range(PLANNING_WEEKS):
+        for week_idx in range(planning_weeks):
             week_start = start_week + pd.Timedelta(weeks=week_idx)
             week_bucket = _week_bucket(week_start)
             month_bucket = _month_bucket_from_week(week_start)
 
-            candidates: List[Tuple[Dict, float, bool]] = []  # (row, score, soft_penalty_applied)
+            candidates: List[Tuple[Dict, float, bool, str]] = []  # (row, score, soft_penalty_applied, penalty_mode)
 
             for activity, base_reasons in eligible:
                 aid = activity["ActivityID"]
                 category = activity["Category"]
+                penalty_mode = activity.get("repeat_penalty_mode", "HARD")
 
                 if persona_count >= persona_cap:
                     _record_failure(decisions, aid, "CAP", "FAIL_PERSONA_CAP", "Safari persona cap reached")
@@ -188,24 +202,45 @@ def run_calendar_engine(
                 # category cooldown
                 last_cat = last_category_week.get(category)
                 if last_cat is not None and week_idx - last_cat <= cat_cap["cooldown_weeks"] - 1:
-                    _record_failure(decisions, aid, "SCHEDULE", "FAIL_CATEGORY_SPACING", "Category cooldown active")
+                    actual_gap = week_idx - last_cat
+                    details = (
+                        f"blocking_activity_id={last_category_activity.get(category)}; "
+                        f"blocking_category={category}; "
+                        f"blocking_week_idx={last_cat}; "
+                        f"required_gap_weeks={cat_cap['cooldown_weeks']}; "
+                        f"actual_gap_weeks={actual_gap}"
+                    )
+                    _record_failure(decisions, aid, "SCHEDULE", "FAIL_CATEGORY_SPACING", details)
                     continue
 
                 # gap rules
                 min_gap_act = int(activity.get("min_gap_activity_weeks", 0))
                 if aid in last_activity_week and week_idx - last_activity_week[aid] <= min_gap_act - 1:
-                    _record_failure(decisions, aid, "SCHEDULE", "FAIL_GAP_SAME_ACTIVITY", "Activity gap not met")
+                    actual_gap = week_idx - last_activity_week[aid]
+                    details = (
+                        f"blocking_activity_id={aid}; blocking_category={category}; "
+                        f"blocking_week_idx={last_activity_week[aid]}; "
+                        f"required_gap_weeks={min_gap_act}; actual_gap_weeks={actual_gap}"
+                    )
+                    _record_failure(decisions, aid, "SCHEDULE", "FAIL_GAP_SAME_ACTIVITY", details)
                     continue
 
                 min_gap_theme = int(activity.get("min_gap_theme_weeks", 0))
                 theme_key = activity.get("Theme", "")
                 if theme_key in last_theme_week and week_idx - last_theme_week[theme_key] <= min_gap_theme - 1:
-                    _record_failure(decisions, aid, "SCHEDULE", "FAIL_GAP_SAME_THEME", "Theme gap not met")
+                    actual_gap = week_idx - last_theme_week[theme_key]
+                    details = (
+                        f"blocking_activity_id={last_theme_activity.get(theme_key)}; "
+                        f"blocking_category={category}; "
+                        f"blocking_week_idx={last_theme_week[theme_key]}; "
+                        f"required_gap_weeks={min_gap_theme}; actual_gap_weeks={actual_gap}"
+                    )
+                    _record_failure(decisions, aid, "SCHEDULE", "FAIL_GAP_SAME_THEME", details)
                     continue
 
                 # hard variety
                 vkey = activity.get("VarietyKey", "")
-                if vkey:
+                if vkey and penalty_mode == "HARD":
                     if variety_month_seen.get((vkey, month_bucket)):
                         _record_failure(
                             decisions,
@@ -217,16 +252,35 @@ def run_calendar_engine(
                         continue
 
                 soft_penalty = False
-                if vkey and activity.get("repeat_penalty_mode", "HARD") == "SOFT":
+                if vkey and penalty_mode == "SOFT":
                     last_week_for_key = variety_recent_week.get(vkey)
                     if last_week_for_key is not None and week_idx - last_week_for_key <= VARIETY_RECENT_WINDOW_WEEKS:
                         soft_penalty = True
+
+                # channel sanity
+                channels = activity["channels"]
+                if activity.get("requires_human"):
+                    human_channels = [ch for ch in channels if ch in HUMAN_CHANNELS]
+                    if not human_channels:
+                        _record_failure(
+                            decisions,
+                            aid,
+                            "SCHEDULE",
+                            "FAIL_CHANNEL_OWNER_MAPPING",
+                            "No human-capable channel available",
+                        )
+                        continue
+                    channels = human_channels
+
+                if not channels:
+                    _record_failure(decisions, aid, "SCHEDULE", "FAIL_CHANNEL_OWNER_MAPPING", "No valid channel")
+                    continue
 
                 score = activity["Priority"] * 100 + CATEGORY_PRECEDENCE_BONUS.get(category, 0)
                 if soft_penalty:
                     score -= VARIETY_SOFT_PENALTY
 
-                candidates.append((activity, score, soft_penalty))
+                candidates.append((activity, score, soft_penalty, penalty_mode))
 
             if not candidates:
                 continue
@@ -240,15 +294,31 @@ def run_calendar_engine(
                     x[0]["ActivityID"],
                 )
             )
-            chosen, _, applied_soft = candidates[0]
+            chosen, _, applied_soft, chosen_penalty_mode = candidates[0]
             aid = chosen["ActivityID"]
             category = chosen["Category"]
             vkey = chosen.get("VarietyKey", "")
 
-            channel = chosen["PreferredChannel"] if chosen["PreferredChannel"] in chosen["channels"] else chosen["channels"][0]
-            owner = _owner_for_channel(channel, bool(chosen.get("requires_human")))
+            base_reasons = base_reasons_map.get(aid, ["PASS_ELIGIBILITY", "PASS_MODIFIER"])
 
-            reason_codes = ["PASS_CAP", "PASS_SCHEDULE"]
+            channel_options = chosen["channels"]
+            if chosen.get("requires_human"):
+                channel_options = [ch for ch in channel_options if ch in HUMAN_CHANNELS]
+            channel = chosen["PreferredChannel"] if chosen["PreferredChannel"] in channel_options else channel_options[0]
+            owner = _owner_for_channel(channel)
+
+            # prevent invalid digital + human pairings
+            if chosen.get("requires_human") and channel in DIGITAL_CHANNELS:
+                _record_failure(
+                    decisions,
+                    aid,
+                    "SCHEDULE",
+                    "FAIL_CHANNEL_OWNER_MAPPING",
+                    "requires_human but only digital channel selected",
+                )
+                continue
+
+            reason_codes = list(base_reasons) + ["PASS_CAP", "PASS_SCHEDULE"]
             if applied_soft:
                 reason_codes.append("WARN_VARIETY_KEY_RECENT_SOFT")
 
@@ -256,10 +326,13 @@ def run_calendar_engine(
             persona_count += 1
             category_counts[category] = category_counts.get(category, 0) + 1
             last_category_week[category] = week_idx
+            last_category_activity[category] = aid
             last_activity_week[aid] = week_idx
             last_theme_week[chosen.get("Theme", "")] = week_idx
+            last_theme_activity[chosen.get("Theme", "")] = aid
             if vkey:
-                variety_month_seen[(vkey, month_bucket)] = True
+                if chosen_penalty_mode == "HARD":
+                    variety_month_seen[(vkey, month_bucket)] = True
                 variety_recent_week[vkey] = week_idx
 
             week_bucket_label = week_bucket
@@ -309,17 +382,50 @@ def run_calendar_engine(
                 }
             )
 
-    calendar_df = pd.DataFrame(calendar_rows).sort_values([
-        "customer_id",
-        "week_bucket",
-        "activity_id",
-    ]).reset_index(drop=True)
-    log_df = pd.DataFrame(log_rows).sort_values([
-        "customer_id",
-        "activity_id",
-        "stage",
-        "reason_code",
-    ]).reset_index(drop=True)
+    calendar_df = pd.DataFrame(calendar_rows)
+    if calendar_df.empty:
+        calendar_df = pd.DataFrame(
+            columns=[
+                "customer_id",
+                "week_bucket",
+                "month_bucket",
+                "activity_id",
+                "category",
+                "sub_category",
+                "channel",
+                "owner_type",
+                "reason_codes",
+            ]
+        )
+    else:
+        calendar_df = calendar_df.sort_values([
+            "customer_id",
+            "week_bucket",
+            "activity_id",
+        ]).reset_index(drop=True)
+
+    log_df = pd.DataFrame(log_rows)
+    if not log_df.empty:
+        log_df = log_df.sort_values([
+            "customer_id",
+            "activity_id",
+            "stage",
+            "reason_code",
+        ]).reset_index(drop=True)
+    else:
+        log_df = pd.DataFrame(
+            columns=[
+                "customer_id",
+                "activity_id",
+                "activity_name",
+                "category",
+                "sub_category",
+                "stage",
+                "result",
+                "reason_code",
+                "details",
+            ]
+        )
     return calendar_df, log_df
 
 

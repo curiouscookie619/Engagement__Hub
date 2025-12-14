@@ -9,6 +9,18 @@ import pandas as pd
 from ingest import ValidationError
 
 
+CANONICAL_CHANNELS = [
+    "WhatsApp",
+    "Email",
+    "SMS",
+    "Portal",
+    "Telecalling",
+    "RMVisit",
+    "Branch",
+    "Event / Webinar",
+]
+
+
 REQUIRED_COLUMNS = [
     "activity_id",
     "activity_name",
@@ -66,7 +78,13 @@ def normalise_activity_library(df: pd.DataFrame) -> pd.DataFrame:
     lib["requires_kids"] = lib["requires_kids"].apply(_bool_from_string) if "requires_kids" in lib.columns else False
     lib["requires_human"] = lib["requires_human"].apply(_bool_from_string)
 
-    lib["channels"] = lib["allowed_channels"].fillna("").apply(_split_pipe)
+    def normalise_channels(raw: str) -> List[str]:
+        values = _split_pipe(raw)
+        if not values:
+            return CANONICAL_CHANNELS.copy()
+        return values
+
+    lib["channels"] = lib["allowed_channels"].fillna("").apply(normalise_channels)
     if lib["channels"].apply(len).eq(0).any():
         raise ValidationError("allowed_channels must not be empty; use ALL if unrestricted")
 
