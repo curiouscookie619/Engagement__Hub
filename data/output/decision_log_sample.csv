@@ -1,0 +1,141 @@
+customer_id,activity_id,activity_name,category,sub_category,stage,result,reason_code,details
+C001,COM_CITY_017,City Customer Milestone Event,Community & Connections,City Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C001,COM_FEST_019,Festival of Protection Greeting,Community & Connections,Festivals & Celebrations,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,COM_PROD_018,Product Family Milestone Note,Community & Connections,Product Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C001,COM_STO_020,My Edelweiss Journey Story,Community & Connections,Customer Stories / Advocacy,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C001,ELL_FAM_001,Family Milestone Celebration Template,Everyday Life & Learning,Family Engagement,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,ELL_FIN_002,Money Minded Mondays Quiz,Everyday Life & Learning,Personal Finance,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-02,2024-03,2024-04,2024-05,2024-06,2024-07,2024-08; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C001,ELL_LEARN_004,Ask the Expert Webinar Invite,Everyday Life & Learning,Learning Community,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C001,ELL_LIFE_003,Healthy You Secure Family Challenge,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,GRO_CRS_023,Protection Gap Recommendation,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,GRO_LEG_024,Passing it Forward Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,GRO_NEED_021,Let’s Reassess Your Needs,Growth & Review,Need Assessment,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,GRO_PORT_022,Annual Portfolio Review Report,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,LOY_ADV_016,Free Annual Review Slot,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,LOY_BEN_014,Exclusive Health Check Offer,"Loyalty, Rewards & Access",Exclusive Benefits,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,LOY_EVT_013,Customer Appreciation Evening,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C001,LOY_MIL_015,5 Years with Edelweiss Note,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C001,MAT_DAY_027,Maturity Day Congratulations,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C001,MAT_POST_028,What Next After Maturity,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,MAT_T1_026,Maturity Reinvestment Options,Maturity,T-2 & T-1 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C001,MAT_T3_025,Maturity T-3 Month Preparation,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C001,POL_BON_007,Bonus Declaration Update,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,POL_CLM_009,Post Claim Closure Thank You,Policy Journey,Claims & Assistance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,POL_REN_006,M-1 Renewal Reminder with Easy Pay,Policy Journey,Renewals,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,POL_SRV_008,Customer Care Check-in Call,Policy Journey,Servicing Touchpoints,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,POL_UPD_005,Quarterly Policy Snapshot,Policy Journey,Policy Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C001,TRU_AWD_012,Trust Certificate Delivery,Trust & Touchpoints,Recognition & Awards,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,TRU_BTS_011,Humans of Edelweiss Story,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C001,TRU_TRN_010,Trust in Numbers Digest,Trust & Touchpoints,Transparency Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,COM_CITY_017,City Customer Milestone Event,Community & Connections,City Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C002,COM_FEST_019,Festival of Protection Greeting,Community & Connections,Festivals & Celebrations,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C002,COM_PROD_018,Product Family Milestone Note,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,COM_STO_020,My Edelweiss Journey Story,Community & Connections,Customer Stories / Advocacy,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C002,ELL_FAM_001,Family Milestone Celebration Template,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS,Kids flag not eligible
+C002,ELL_FIN_002,Money Minded Mondays Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,ELL_LEARN_004,Ask the Expert Webinar Invite,Everyday Life & Learning,Learning Community,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,ELL_LIFE_003,Healthy You Secure Family Challenge,Everyday Life & Learning,Lifestyle & Well-being,MODIFIER,EXCLUDED,FAIL_KIDS,Kids flag not eligible
+C002,GRO_CRS_023,Protection Gap Recommendation,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,GRO_LEG_024,Passing it Forward Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,GRO_NEED_021,Let’s Reassess Your Needs,Growth & Review,Need Assessment,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C002,GRO_PORT_022,Annual Portfolio Review Report,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,LOY_ADV_016,Free Annual Review Slot,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,LOY_BEN_014,Exclusive Health Check Offer,"Loyalty, Rewards & Access",Exclusive Benefits,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,LOY_EVT_013,Customer Appreciation Evening,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C002,LOY_MIL_015,5 Years with Edelweiss Note,"Loyalty, Rewards & Access",Loyalty Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,MAT_DAY_027,Maturity Day Congratulations,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C002,MAT_POST_028,What Next After Maturity,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,MAT_T1_026,Maturity Reinvestment Options,Maturity,T-2 & T-1 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,MAT_T3_025,Maturity T-3 Month Preparation,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C002,POL_BON_007,Bonus Declaration Update,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,POL_CLM_009,Post Claim Closure Thank You,Policy Journey,Claims & Assistance,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C002,POL_REN_006,M-1 Renewal Reminder with Easy Pay,Policy Journey,Renewals,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,POL_SRV_008,Customer Care Check-in Call,Policy Journey,Servicing Touchpoints,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C002,POL_UPD_005,Quarterly Policy Snapshot,Policy Journey,Policy Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C002,TRU_AWD_012,Trust Certificate Delivery,Trust & Touchpoints,Recognition & Awards,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,TRU_BTS_011,Humans of Edelweiss Story,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C002,TRU_TRN_010,Trust in Numbers Digest,Trust & Touchpoints,Transparency Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,COM_CITY_017,City Customer Milestone Event,Community & Connections,City Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,COM_FEST_019,Festival of Protection Greeting,Community & Connections,Festivals & Celebrations,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C003,COM_PROD_018,Product Family Milestone Note,Community & Connections,Product Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,COM_STO_020,My Edelweiss Journey Story,Community & Connections,Customer Stories / Advocacy,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,ELL_FAM_001,Family Milestone Celebration Template,Everyday Life & Learning,Family Engagement,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-07; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C003,ELL_FIN_002,Money Minded Mondays Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C003,ELL_LEARN_004,Ask the Expert Webinar Invite,Everyday Life & Learning,Learning Community,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,ELL_LIFE_003,Healthy You Secure Family Challenge,Everyday Life & Learning,Lifestyle & Well-being,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,GRO_CRS_023,Protection Gap Recommendation,Growth & Review,Cross-Sell,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C003,GRO_LEG_024,Passing it Forward Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C003,GRO_NEED_021,Let’s Reassess Your Needs,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,GRO_PORT_022,Annual Portfolio Review Report,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,LOY_ADV_016,Free Annual Review Slot,"Loyalty, Rewards & Access",Access to Advice,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,LOY_BEN_014,Exclusive Health Check Offer,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,LOY_EVT_013,Customer Appreciation Evening,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C003,LOY_MIL_015,5 Years with Edelweiss Note,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,MAT_DAY_027,Maturity Day Congratulations,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C003,MAT_POST_028,What Next After Maturity,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C003,MAT_T1_026,Maturity Reinvestment Options,Maturity,T-2 & T-1 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,MAT_T3_025,Maturity T-3 Month Preparation,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C003,POL_BON_007,Bonus Declaration Update,Policy Journey,Bonus Declaration,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,POL_CLM_009,Post Claim Closure Thank You,Policy Journey,Claims & Assistance,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C003,POL_REN_006,M-1 Renewal Reminder with Easy Pay,Policy Journey,Renewals,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C003,POL_SRV_008,Customer Care Check-in Call,Policy Journey,Servicing Touchpoints,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C003,POL_UPD_005,Quarterly Policy Snapshot,Policy Journey,Policy Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C003,TRU_AWD_012,Trust Certificate Delivery,Trust & Touchpoints,Recognition & Awards,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C003,TRU_BTS_011,Humans of Edelweiss Story,Trust & Touchpoints,Behind-the-Scenes Stories,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,TRU_TRN_010,Trust in Numbers Digest,Trust & Touchpoints,Transparency Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-07; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C004,COM_CITY_017,City Customer Milestone Event,Community & Connections,City Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C004,COM_FEST_019,Festival of Protection Greeting,Community & Connections,Festivals & Celebrations,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,COM_PROD_018,Product Family Milestone Note,Community & Connections,Product Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C004,COM_STO_020,My Edelweiss Journey Story,Community & Connections,Customer Stories / Advocacy,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C004,ELL_FAM_001,Family Milestone Celebration Template,Everyday Life & Learning,Family Engagement,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,ELL_FIN_002,Money Minded Mondays Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,ELL_LEARN_004,Ask the Expert Webinar Invite,Everyday Life & Learning,Learning Community,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-05,2024-09; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C004,ELL_LIFE_003,Healthy You Secure Family Challenge,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,GRO_CRS_023,Protection Gap Recommendation,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,GRO_LEG_024,Passing it Forward Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,GRO_NEED_021,Let’s Reassess Your Needs,Growth & Review,Need Assessment,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,GRO_PORT_022,Annual Portfolio Review Report,Growth & Review,Portfolio Review,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C004,LOY_ADV_016,Free Annual Review Slot,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,LOY_BEN_014,Exclusive Health Check Offer,"Loyalty, Rewards & Access",Exclusive Benefits,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,LOY_EVT_013,Customer Appreciation Evening,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C004,LOY_MIL_015,5 Years with Edelweiss Note,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C004,MAT_DAY_027,Maturity Day Congratulations,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C004,MAT_POST_028,What Next After Maturity,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,MAT_T1_026,Maturity Reinvestment Options,Maturity,T-2 & T-1 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C004,MAT_T3_025,Maturity T-3 Month Preparation,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C004,POL_BON_007,Bonus Declaration Update,Policy Journey,Bonus Declaration,SCHEDULE,EXCLUDED,FAIL_CATEGORY_SPACING,Minimum spacing not met
+C004,POL_CLM_009,Post Claim Closure Thank You,Policy Journey,Claims & Assistance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,POL_REN_006,M-1 Renewal Reminder with Easy Pay,Policy Journey,Renewals,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,POL_SRV_008,Customer Care Check-in Call,Policy Journey,Servicing Touchpoints,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,POL_UPD_005,Quarterly Policy Snapshot,Policy Journey,Policy Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C004,TRU_AWD_012,Trust Certificate Delivery,Trust & Touchpoints,Recognition & Awards,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C004,TRU_BTS_011,Humans of Edelweiss Story,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C004,TRU_TRN_010,Trust in Numbers Digest,Trust & Touchpoints,Transparency Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_CITY_017,City Customer Milestone Event,Community & Connections,City Milestones,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C005,COM_FEST_019,Festival of Protection Greeting,Community & Connections,Festivals & Celebrations,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_PROD_018,Product Family Milestone Note,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_STO_020,My Edelweiss Journey Story,Community & Connections,Customer Stories / Advocacy,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,ELL_FAM_001,Family Milestone Celebration Template,Everyday Life & Learning,Family Engagement,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,ELL_FIN_002,Money Minded Mondays Quiz,Everyday Life & Learning,Personal Finance,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-02,2024-03,2024-04,2024-05,2024-06,2024-07,2024-08; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C005,ELL_LEARN_004,Ask the Expert Webinar Invite,Everyday Life & Learning,Learning Community,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C005,ELL_LIFE_003,Healthy You Secure Family Challenge,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,GRO_CRS_023,Protection Gap Recommendation,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,GRO_LEG_024,Passing it Forward Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,GRO_NEED_021,Let’s Reassess Your Needs,Growth & Review,Need Assessment,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,GRO_PORT_022,Annual Portfolio Review Report,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,LOY_ADV_016,Free Annual Review Slot,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,LOY_BEN_014,Exclusive Health Check Offer,"Loyalty, Rewards & Access",Exclusive Benefits,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,LOY_EVT_013,Customer Appreciation Evening,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,INCLUDED,PASS_SCHEDULE,Included in months: 2024-01; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE
+C005,LOY_MIL_015,5 Years with Edelweiss Note,"Loyalty, Rewards & Access",Loyalty Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,MAT_DAY_027,Maturity Day Congratulations,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C005,MAT_POST_028,What Next After Maturity,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C005,MAT_T1_026,Maturity Reinvestment Options,Maturity,T-2 & T-1 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C005,MAT_T3_025,Maturity T-3 Month Preparation,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_RENEWAL_BUCKET,Renewal bucket not eligible
+C005,POL_BON_007,Bonus Declaration Update,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,POL_CLM_009,Post Claim Closure Thank You,Policy Journey,Claims & Assistance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,POL_REN_006,M-1 Renewal Reminder with Easy Pay,Policy Journey,Renewals,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,POL_SRV_008,Customer Care Check-in Call,Policy Journey,Servicing Touchpoints,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,POL_UPD_005,Quarterly Policy Snapshot,Policy Journey,Policy Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-04,2024-07,2024-10; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C005,TRU_AWD_012,Trust Certificate Delivery,Trust & Touchpoints,Recognition & Awards,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,TRU_BTS_011,Humans of Edelweiss Story,Trust & Touchpoints,Behind-the-Scenes Stories,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,TRU_TRN_010,Trust in Numbers Digest,Trust & Touchpoints,Transparency Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-07; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"

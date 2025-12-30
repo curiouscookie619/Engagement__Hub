@@ -1,0 +1,17 @@
+# Traceability Matrix
+
+Mapping of authoritative spec rules to implementation and automated verification.
+
+| Spec Rule | Implementation | Test / Verification |
+| --- | --- | --- |
+| Canonical enums for Safari persona, life stage, renewal buckets, city tier, occupation type, kids flags/ages, PTI | `ingest.load_d365` enforces allowed sets; `derive.build_customer_profile` clamps derived values to canonical bands. | `run_sample.py` exercises ingestion; `tests/test_engine.py::test_derived_profile_bandings` asserts derived bands. |
+| Premium-to-income bands, city tier, occupation clustering, kids flags/age bands, surrender % | `derive.py` computes PTI bands, tier mapping, occupation clustering, kids flags/age, surrender ratios using `as_of_date`. | `tests/test_engine.py::test_derived_profile_bandings` validates PTI, kids, renewal bucket; `run_sample.py` generates `derived_profile_*` for inspection. |
+| Activity library multi-value parsing and ALL handling | `activity_library.normalise_activity_library` splits pipe-delimited cells, honours `ALL`, and rejects empty eligibility lists. | `run_sample.py` loads and normalises the sample activity library before assertions. |
+| Calendarisation order: base eligibility → contextual modifiers → caps → channel → scheduling | `calendar_engine.run_calendar_engine` executes stages with stage-tagged logs; ordering enforced in the main loop. | `tests/test_engine.py` spacing/cap/precedence cases and `run_sample.py` assertions cover each stage. |
+| Caps & spacing by category and Safari persona | `calendar_engine.CATEGORY_CAPS` and `SAFARI_CAPS` gate inclusions with cap/spacing checks and reason codes. | `tests/test_engine.py::test_persona_cap_enforced`, `test_spacing_respected`; `run_sample.py::_assert_caps/_assert_spacing`. |
+| Precedence: Servicing overrides all; Renewal over Growth & Review; Maturity suppresses non-servicing | Scheduling block in `calendar_engine.run_calendar_engine` defers lower-precedence items with `OVERRIDE_*` reason codes. | `tests/test_engine.py::test_precedence_rules`; `run_sample.py::_assert_precedence`. |
+| Deterministic ordering & tie-breakers (Priority desc, category precedence, ActivityID asc) | Activity sorting uses priority then category rank then ActivityID; month-level scheduling preserves stable ordering. | Determinism verified by repeatable `run_sample.py` assertions and unit tests. |
+| Decision log with stage + reason codes for every customer×activity | `calendar_engine` records a single outcome row per customer×activity with the deciding stage/result/reason plus inclusion details. | `run_sample.py::_assert_decision_log` enforces exactly one row per customer×activity; unit tests cover override and cap reasons. |
+| Safari persona caps override life-stage limits | Persona caps drive annual ceilings irrespective of life stage; `LIFE_STAGE_CAPS` is documented but not enforced. | `tests/test_engine.py::test_safari_cap_overrides_life_stage` shows higher Safari cap applied even when life-stage cap is lower. |
+| Servicing overrides other engagements in same bucket | Scheduling uses `_is_servicing` to classify Policy Journey servicing touches and defer other activities. | `tests/test_engine.py::test_servicing_collision_logs_override` validates OVERRIDE_SERVICING in the decision log and calendar reduction. |
+| Derived profile output for auditability | `export.export_outputs` writes `derived_profile_*` alongside calendar and decision outputs. | `run_sample.py` generates derived profile artifacts in `data/output`. |

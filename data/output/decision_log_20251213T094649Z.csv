@@ -1,0 +1,281 @@
+customer_id,activity_id,activity_name,category,sub_category,stage,result,reason_code,details
+C001,COM_CITY_001,City_Milestone_Thank_You,Community & Connections,City Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,COM_CITY_002,City_Milestone_Event,Community & Connections,City Milestones,CAP,EXCLUDED,FAIL_CATEGORY_CAP,Category cap reached
+C001,COM_FEST_001,Regional_Festival_Greeting,Community & Connections,Festivals & Celebrations,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W05; reasons=PASS_CAP|PASS_SCHEDULE
+C001,COM_FEST_002,Festival_Protection_Campaign,Community & Connections,Festivals & Celebrations,CAP,EXCLUDED,FAIL_CATEGORY_CAP,Category cap reached
+C001,COM_PROD_001,Product_Milestone_Infographic,Community & Connections,Product Milestones,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W06; reasons=PASS_CAP|PASS_SCHEDULE
+C001,COM_PROD_002,Customer_Testimonial_Spotlight,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,COM_STO_001,My_Journey_Story_Prompt,Community & Connections,Customer Stories / Advocacy,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W07; reasons=PASS_CAP|PASS_SCHEDULE
+C001,COM_STO_002,Referral_Thank_You_Wall,Community & Connections,Customer Stories / Advocacy,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W08; reasons=PASS_CAP|PASS_SCHEDULE
+C001,ELL_FAM_001,Family_Finance_Planner,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS_AGE,Kids age band not eligible
+C001,ELL_FAM_002,Kids_Money_Game,Everyday Life & Learning,Family Engagement,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,ELL_FIN_001,Tax_Mythbusters_90s,Everyday Life & Learning,Personal Finance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,ELL_FIN_003,Expense_Habit_Scan,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,ELL_LRN_001,Ask_the_Expert_Webinar,Everyday Life & Learning,Learning Community,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,ELL_LRN_002,Monthly_MoneyTalks_Poll,Everyday Life & Learning,Learning Community,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,ELL_LWB_001,Wellness_7_Day_Micro_Challenge,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,ELL_LWB_002,Mindful_Minutes_Prompt,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,GRW_LEG_001,Passing_It_Forward_Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,GRW_LEG_002,Estate_Planning_Workshop,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,GRW_NA_001,Need_Reassessment_Warmup,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,GRW_NA_002,Need_Analysis_Booking,Growth & Review,Need Assessment,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,GRW_PR_001,Annual_Portfolio_Snapshot,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,GRW_PR_002,RM_Portfolio_Review_Call,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,GRW_XS_001,Gap_Fit_Recommendation,Growth & Review,Cross-Sell,MODIFIER,EXCLUDED,FAIL_PTI,PTI band not eligible
+C001,GRW_XS_002,Spouse_Protection_Addon,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,LOY_ADV_001,Advice_Slot_Booking,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,LOY_ADV_002,Expert_Session_Invite,"Loyalty, Rewards & Access",Access to Advice,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,LOY_BEN_001,Partner_Benefit_Wellness,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W03,2024-W12; reasons=PASS_CAP|PASS_SCHEDULE"
+C001,LOY_BEN_002,HNI_Travel_Benefit,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C001,LOY_EVT_001,Customer_Day_Invite,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,LOY_EVT_002,Health_Day_RSVP,"Loyalty, Rewards & Access",Customer Day / Branch Events,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,LOY_MIL_001,Five_Year_Loyalty_Badge,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C001,LOY_MIL_002,Loyalty_Appreciation_Call,"Loyalty, Rewards & Access",Loyalty Milestones,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,MAT_DAY_001,Maturity_Day_Celebration_Kit,Maturity,Maturity Date,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C001,MAT_DAY_002,Maturity_Day_Event_Invite,Maturity,Maturity Date,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W04; reasons=PASS_CAP|PASS_SCHEDULE
+C001,MAT_POST_001,Post_Maturity_Next_Steps,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,MAT_POST_002,Post_Maturity_Reinvestment_Call,Maturity,Post-Maturity,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,MAT_T2_001,Maturity_Reinvestment_Preview,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,MAT_T2_002,Maturity_Final_Call,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,MAT_T3_001,Maturity_T3_Goal_Nudge,Maturity,T-3 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,MAT_T3_002,Maturity_T3_Options_Snapshot,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,POL_BON_001,Bonus_Declaration_Explainer,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,POL_BON_002,Bonus_Appreciation_Call,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C001,POL_CLM_001,Claims_Guidance_Checklist,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,POL_CLM_002,Claim_Status_Update,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,POL_REN_001,Renewal_M2_Snapshot,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,POL_REN_002,Renewal_M1_Reminder,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,POL_SVC_001,Service_Checkin_Call,Policy Journey,Servicing Touchpoints,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C001,POL_SVC_002,Quick_Service_Survey,Policy Journey,Servicing Touchpoints,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W02,2024-W11; reasons=PASS_CAP|PASS_SCHEDULE"
+C001,POL_UPD_001,Plan_at_a_Glance,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,POL_UPD_002,ULIP_Fund_Snapshot,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C001,TRU_AWD_001,Awards_and_Recognition_Update,Trust & Touchpoints,Recognition & Awards,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W09; reasons=PASS_CAP|PASS_SCHEDULE
+C001,TRU_BTS_001,Humans_of_Edelweiss,Trust & Touchpoints,Behind-the-Scenes Stories,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C001,TRU_BTS_002,CSR_Impact_Reel,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W01,2024-W10; reasons=PASS_CAP|PASS_SCHEDULE"
+C001,TRU_TRN_001,Trust_in_Numbers_Digest,Trust & Touchpoints,Transparency Updates,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C001,TRU_TRN_002,Where_Your_Premium_Goes,Trust & Touchpoints,Transparency Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,COM_CITY_001,City_Milestone_Thank_You,Community & Connections,City Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,COM_CITY_002,City_Milestone_Event,Community & Connections,City Milestones,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C002,COM_FEST_001,Regional_Festival_Greeting,Community & Connections,Festivals & Celebrations,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,COM_FEST_002,Festival_Protection_Campaign,Community & Connections,Festivals & Celebrations,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,COM_PROD_001,Product_Milestone_Infographic,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,COM_PROD_002,Customer_Testimonial_Spotlight,Community & Connections,Product Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,COM_STO_001,My_Journey_Story_Prompt,Community & Connections,Customer Stories / Advocacy,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,COM_STO_002,Referral_Thank_You_Wall,Community & Connections,Customer Stories / Advocacy,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,ELL_FAM_001,Family_Finance_Planner,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS,Kids flag not eligible
+C002,ELL_FAM_002,Kids_Money_Game,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS,Kids flag not eligible
+C002,ELL_FIN_001,Tax_Mythbusters_90s,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,ELL_FIN_003,Expense_Habit_Scan,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,ELL_LRN_001,Ask_the_Expert_Webinar,Everyday Life & Learning,Learning Community,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,ELL_LRN_002,Monthly_MoneyTalks_Poll,Everyday Life & Learning,Learning Community,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W04,2024-W06,2024-W10; reasons=PASS_CAP|PASS_SCHEDULE"
+C002,ELL_LWB_001,Wellness_7_Day_Micro_Challenge,Everyday Life & Learning,Lifestyle & Well-being,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,ELL_LWB_002,Mindful_Minutes_Prompt,Everyday Life & Learning,Lifestyle & Well-being,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,GRW_LEG_001,Passing_It_Forward_Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,GRW_LEG_002,Estate_Planning_Workshop,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,GRW_NA_001,Need_Reassessment_Warmup,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,GRW_NA_002,Need_Analysis_Booking,Growth & Review,Need Assessment,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,GRW_PR_001,Annual_Portfolio_Snapshot,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,GRW_PR_002,RM_Portfolio_Review_Call,Growth & Review,Portfolio Review,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,GRW_XS_001,Gap_Fit_Recommendation,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,GRW_XS_002,Spouse_Protection_Addon,Growth & Review,Cross-Sell,MODIFIER,EXCLUDED,FAIL_KIDS,Kids flag not eligible
+C002,LOY_ADV_001,Advice_Slot_Booking,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,LOY_ADV_002,Expert_Session_Invite,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,LOY_BEN_001,Partner_Benefit_Wellness,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W05; reasons=PASS_CAP|PASS_SCHEDULE
+C002,LOY_BEN_002,HNI_Travel_Benefit,"Loyalty, Rewards & Access",Exclusive Benefits,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,LOY_EVT_001,Customer_Day_Invite,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C002,LOY_EVT_002,Health_Day_RSVP,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W07; reasons=PASS_CAP|PASS_SCHEDULE
+C002,LOY_MIL_001,Five_Year_Loyalty_Badge,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,LOY_MIL_002,Loyalty_Appreciation_Call,"Loyalty, Rewards & Access",Loyalty Milestones,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,MAT_DAY_001,Maturity_Day_Celebration_Kit,Maturity,Maturity Date,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C002,MAT_DAY_002,Maturity_Day_Event_Invite,Maturity,Maturity Date,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W09; reasons=PASS_CAP|PASS_SCHEDULE
+C002,MAT_POST_001,Post_Maturity_Next_Steps,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,MAT_POST_002,Post_Maturity_Reinvestment_Call,Maturity,Post-Maturity,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,MAT_T2_001,Maturity_Reinvestment_Preview,Maturity,T-2 & T-1 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,MAT_T2_002,Maturity_Final_Call,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,MAT_T3_001,Maturity_T3_Goal_Nudge,Maturity,T-3 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,MAT_T3_002,Maturity_T3_Options_Snapshot,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,POL_BON_001,Bonus_Declaration_Explainer,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,POL_BON_002,Bonus_Appreciation_Call,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C002,POL_CLM_001,Claims_Guidance_Checklist,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,POL_CLM_002,Claim_Status_Update,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,POL_REN_001,Renewal_M2_Snapshot,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,POL_REN_002,Renewal_M1_Reminder,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,POL_SVC_001,Service_Checkin_Call,Policy Journey,Servicing Touchpoints,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C002,POL_SVC_002,Quick_Service_Survey,Policy Journey,Servicing Touchpoints,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W03,2024-W12; reasons=PASS_CAP|PASS_SCHEDULE"
+C002,POL_UPD_001,Plan_at_a_Glance,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,POL_UPD_002,ULIP_Fund_Snapshot,Policy Journey,Policy Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,TRU_AWD_001,Awards_and_Recognition_Update,Trust & Touchpoints,Recognition & Awards,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C002,TRU_BTS_001,Humans_of_Edelweiss,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W01,2024-W08; reasons=PASS_CAP|PASS_SCHEDULE"
+C002,TRU_BTS_002,CSR_Impact_Reel,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W02,2024-W11; reasons=PASS_CAP|PASS_SCHEDULE"
+C002,TRU_TRN_001,Trust_in_Numbers_Digest,Trust & Touchpoints,Transparency Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C002,TRU_TRN_002,Where_Your_Premium_Goes,Trust & Touchpoints,Transparency Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,COM_CITY_001,City_Milestone_Thank_You,Community & Connections,City Milestones,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W07; reasons=PASS_CAP|PASS_SCHEDULE
+C003,COM_CITY_002,City_Milestone_Event,Community & Connections,City Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,COM_FEST_001,Regional_Festival_Greeting,Community & Connections,Festivals & Celebrations,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W09; reasons=PASS_CAP|PASS_SCHEDULE
+C003,COM_FEST_002,Festival_Protection_Campaign,Community & Connections,Festivals & Celebrations,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,COM_PROD_001,Product_Milestone_Infographic,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,COM_PROD_002,Customer_Testimonial_Spotlight,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,COM_STO_001,My_Journey_Story_Prompt,Community & Connections,Customer Stories / Advocacy,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,COM_STO_002,Referral_Thank_You_Wall,Community & Connections,Customer Stories / Advocacy,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,ELL_FAM_001,Family_Finance_Planner,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS_AGE,Kids age band not eligible
+C003,ELL_FAM_002,Kids_Money_Game,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS_AGE,Kids age band not eligible
+C003,ELL_FIN_001,Tax_Mythbusters_90s,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C003,ELL_FIN_003,Expense_Habit_Scan,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C003,ELL_LRN_001,Ask_the_Expert_Webinar,Everyday Life & Learning,Learning Community,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,ELL_LRN_002,Monthly_MoneyTalks_Poll,Everyday Life & Learning,Learning Community,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C003,ELL_LWB_001,Wellness_7_Day_Micro_Challenge,Everyday Life & Learning,Lifestyle & Well-being,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,ELL_LWB_002,Mindful_Minutes_Prompt,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C003,GRW_LEG_001,Passing_It_Forward_Series,Growth & Review,Legacy Planning,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,GRW_LEG_002,Estate_Planning_Workshop,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C003,GRW_NA_001,Need_Reassessment_Warmup,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,GRW_NA_002,Need_Analysis_Booking,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,GRW_PR_001,Annual_Portfolio_Snapshot,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,GRW_PR_002,RM_Portfolio_Review_Call,Growth & Review,Portfolio Review,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,GRW_XS_001,Gap_Fit_Recommendation,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,GRW_XS_002,Spouse_Protection_Addon,Growth & Review,Cross-Sell,MODIFIER,EXCLUDED,FAIL_KIDS_AGE,Kids age band not eligible
+C003,LOY_ADV_001,Advice_Slot_Booking,"Loyalty, Rewards & Access",Access to Advice,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,LOY_ADV_002,Expert_Session_Invite,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,LOY_BEN_001,Partner_Benefit_Wellness,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W05,2024-W12; reasons=PASS_CAP|PASS_SCHEDULE"
+C003,LOY_BEN_002,HNI_Travel_Benefit,"Loyalty, Rewards & Access",Exclusive Benefits,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,LOY_EVT_001,Customer_Day_Invite,"Loyalty, Rewards & Access",Customer Day / Branch Events,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,LOY_EVT_002,Health_Day_RSVP,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W06; reasons=PASS_CAP|PASS_SCHEDULE
+C003,LOY_MIL_001,Five_Year_Loyalty_Badge,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C003,LOY_MIL_002,Loyalty_Appreciation_Call,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C003,MAT_DAY_001,Maturity_Day_Celebration_Kit,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,MAT_DAY_002,Maturity_Day_Event_Invite,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,MAT_POST_001,Post_Maturity_Next_Steps,Maturity,Post-Maturity,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,MAT_POST_002,Post_Maturity_Reinvestment_Call,Maturity,Post-Maturity,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,MAT_T2_001,Maturity_Reinvestment_Preview,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,MAT_T2_002,Maturity_Final_Call,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,MAT_T3_001,Maturity_T3_Goal_Nudge,Maturity,T-3 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,MAT_T3_002,Maturity_T3_Options_Snapshot,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,POL_BON_001,Bonus_Declaration_Explainer,Policy Journey,Bonus Declaration,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W02; reasons=PASS_CAP|PASS_SCHEDULE
+C003,POL_BON_002,Bonus_Appreciation_Call,Policy Journey,Bonus Declaration,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W03; reasons=PASS_CAP|PASS_SCHEDULE
+C003,POL_CLM_001,Claims_Guidance_Checklist,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,POL_CLM_002,Claim_Status_Update,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,POL_REN_001,Renewal_M2_Snapshot,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,POL_REN_002,Renewal_M1_Reminder,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,POL_SVC_001,Service_Checkin_Call,Policy Journey,Servicing Touchpoints,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C003,POL_SVC_002,Quick_Service_Survey,Policy Journey,Servicing Touchpoints,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W04; reasons=PASS_CAP|PASS_SCHEDULE
+C003,POL_UPD_001,Plan_at_a_Glance,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C003,POL_UPD_002,ULIP_Fund_Snapshot,Policy Journey,Policy Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,TRU_AWD_001,Awards_and_Recognition_Update,Trust & Touchpoints,Recognition & Awards,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,TRU_BTS_001,Humans_of_Edelweiss,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W01,2024-W08; reasons=PASS_CAP|PASS_SCHEDULE"
+C003,TRU_BTS_002,CSR_Impact_Reel,Trust & Touchpoints,Behind-the-Scenes Stories,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,TRU_TRN_001,Trust_in_Numbers_Digest,Trust & Touchpoints,Transparency Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W10; reasons=PASS_CAP|PASS_SCHEDULE
+C003,TRU_TRN_002,Where_Your_Premium_Goes,Trust & Touchpoints,Transparency Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W11; reasons=PASS_CAP|PASS_SCHEDULE
+C004,COM_CITY_001,City_Milestone_Thank_You,Community & Connections,City Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,COM_CITY_002,City_Milestone_Event,Community & Connections,City Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,COM_FEST_001,Regional_Festival_Greeting,Community & Connections,Festivals & Celebrations,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W06; reasons=PASS_CAP|PASS_SCHEDULE
+C004,COM_FEST_002,Festival_Protection_Campaign,Community & Connections,Festivals & Celebrations,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,COM_PROD_001,Product_Milestone_Infographic,Community & Connections,Product Milestones,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W07; reasons=PASS_CAP|PASS_SCHEDULE
+C004,COM_PROD_002,Customer_Testimonial_Spotlight,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,COM_STO_001,My_Journey_Story_Prompt,Community & Connections,Customer Stories / Advocacy,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W08; reasons=PASS_CAP|PASS_SCHEDULE
+C004,COM_STO_002,Referral_Thank_You_Wall,Community & Connections,Customer Stories / Advocacy,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C004,ELL_FAM_001,Family_Finance_Planner,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS,Kids flag not eligible
+C004,ELL_FAM_002,Kids_Money_Game,Everyday Life & Learning,Family Engagement,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,ELL_FIN_001,Tax_Mythbusters_90s,Everyday Life & Learning,Personal Finance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,ELL_FIN_003,Expense_Habit_Scan,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,ELL_LRN_001,Ask_the_Expert_Webinar,Everyday Life & Learning,Learning Community,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,ELL_LRN_002,Monthly_MoneyTalks_Poll,Everyday Life & Learning,Learning Community,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,ELL_LWB_001,Wellness_7_Day_Micro_Challenge,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,ELL_LWB_002,Mindful_Minutes_Prompt,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,GRW_LEG_001,Passing_It_Forward_Series,Growth & Review,Legacy Planning,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,GRW_LEG_002,Estate_Planning_Workshop,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,GRW_NA_001,Need_Reassessment_Warmup,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,GRW_NA_002,Need_Analysis_Booking,Growth & Review,Need Assessment,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,GRW_PR_001,Annual_Portfolio_Snapshot,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,GRW_PR_002,RM_Portfolio_Review_Call,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,GRW_XS_001,Gap_Fit_Recommendation,Growth & Review,Cross-Sell,MODIFIER,EXCLUDED,FAIL_PTI,PTI band not eligible
+C004,GRW_XS_002,Spouse_Protection_Addon,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,LOY_ADV_001,Advice_Slot_Booking,"Loyalty, Rewards & Access",Access to Advice,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,LOY_ADV_002,Expert_Session_Invite,"Loyalty, Rewards & Access",Access to Advice,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,LOY_BEN_001,Partner_Benefit_Wellness,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W04,2024-W11; reasons=PASS_CAP|PASS_SCHEDULE"
+C004,LOY_BEN_002,HNI_Travel_Benefit,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C004,LOY_EVT_001,Customer_Day_Invite,"Loyalty, Rewards & Access",Customer Day / Branch Events,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,LOY_EVT_002,Health_Day_RSVP,"Loyalty, Rewards & Access",Customer Day / Branch Events,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,LOY_MIL_001,Five_Year_Loyalty_Badge,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C004,LOY_MIL_002,Loyalty_Appreciation_Call,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C004,MAT_DAY_001,Maturity_Day_Celebration_Kit,Maturity,Maturity Date,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C004,MAT_DAY_002,Maturity_Day_Event_Invite,Maturity,Maturity Date,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W05; reasons=PASS_CAP|PASS_SCHEDULE
+C004,MAT_POST_001,Post_Maturity_Next_Steps,Maturity,Post-Maturity,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,MAT_POST_002,Post_Maturity_Reinvestment_Call,Maturity,Post-Maturity,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,MAT_T2_001,Maturity_Reinvestment_Preview,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,MAT_T2_002,Maturity_Final_Call,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,MAT_T3_001,Maturity_T3_Goal_Nudge,Maturity,T-3 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,MAT_T3_002,Maturity_T3_Options_Snapshot,Maturity,T-3 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,POL_BON_001,Bonus_Declaration_Explainer,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,POL_BON_002,Bonus_Appreciation_Call,Policy Journey,Bonus Declaration,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W02; reasons=PASS_CAP|PASS_SCHEDULE
+C004,POL_CLM_001,Claims_Guidance_Checklist,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,POL_CLM_002,Claim_Status_Update,Policy Journey,Claims and Assistance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,POL_REN_001,Renewal_M2_Snapshot,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,POL_REN_002,Renewal_M1_Reminder,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,POL_SVC_001,Service_Checkin_Call,Policy Journey,Servicing Touchpoints,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C004,POL_SVC_002,Quick_Service_Survey,Policy Journey,Servicing Touchpoints,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W03,2024-W12; reasons=PASS_CAP|PASS_SCHEDULE"
+C004,POL_UPD_001,Plan_at_a_Glance,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,POL_UPD_002,ULIP_Fund_Snapshot,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C004,TRU_AWD_001,Awards_and_Recognition_Update,Trust & Touchpoints,Recognition & Awards,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W09; reasons=PASS_CAP|PASS_SCHEDULE
+C004,TRU_BTS_001,Humans_of_Edelweiss,Trust & Touchpoints,Behind-the-Scenes Stories,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C004,TRU_BTS_002,CSR_Impact_Reel,Trust & Touchpoints,Behind-the-Scenes Stories,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W01,2024-W10; reasons=PASS_CAP|PASS_SCHEDULE"
+C004,TRU_TRN_001,Trust_in_Numbers_Digest,Trust & Touchpoints,Transparency Updates,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C004,TRU_TRN_002,Where_Your_Premium_Goes,Trust & Touchpoints,Transparency Updates,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_CITY_001,City_Milestone_Thank_You,Community & Connections,City Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_CITY_002,City_Milestone_Event,Community & Connections,City Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_FEST_001,Regional_Festival_Greeting,Community & Connections,Festivals & Celebrations,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W04; reasons=PASS_CAP|PASS_SCHEDULE
+C005,COM_FEST_002,Festival_Protection_Campaign,Community & Connections,Festivals & Celebrations,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_PROD_001,Product_Milestone_Infographic,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_PROD_002,Customer_Testimonial_Spotlight,Community & Connections,Product Milestones,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_STO_001,My_Journey_Story_Prompt,Community & Connections,Customer Stories / Advocacy,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,COM_STO_002,Referral_Thank_You_Wall,Community & Connections,Customer Stories / Advocacy,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,ELL_FAM_001,Family_Finance_Planner,Everyday Life & Learning,Family Engagement,MODIFIER,EXCLUDED,FAIL_KIDS,Kids flag not eligible
+C005,ELL_FAM_002,Kids_Money_Game,Everyday Life & Learning,Family Engagement,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,ELL_FIN_001,Tax_Mythbusters_90s,Everyday Life & Learning,Personal Finance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,ELL_FIN_003,Expense_Habit_Scan,Everyday Life & Learning,Personal Finance,MODIFIER,EXCLUDED,FAIL_PTI,PTI band not eligible
+C005,ELL_LRN_001,Ask_the_Expert_Webinar,Everyday Life & Learning,Learning Community,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,ELL_LRN_002,Monthly_MoneyTalks_Poll,Everyday Life & Learning,Learning Community,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W02,2024-W06,2024-W11; reasons=PASS_CAP|PASS_SCHEDULE"
+C005,ELL_LWB_001,Wellness_7_Day_Micro_Challenge,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,ELL_LWB_002,Mindful_Minutes_Prompt,Everyday Life & Learning,Lifestyle & Well-being,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,GRW_LEG_001,Passing_It_Forward_Series,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,GRW_LEG_002,Estate_Planning_Workshop,Growth & Review,Legacy Planning,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,GRW_NA_001,Need_Reassessment_Warmup,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,GRW_NA_002,Need_Analysis_Booking,Growth & Review,Need Assessment,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,GRW_PR_001,Annual_Portfolio_Snapshot,Growth & Review,Portfolio Review,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,GRW_PR_002,RM_Portfolio_Review_Call,Growth & Review,Portfolio Review,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,GRW_XS_001,Gap_Fit_Recommendation,Growth & Review,Cross-Sell,MODIFIER,EXCLUDED,FAIL_PTI,PTI band not eligible
+C005,GRW_XS_002,Spouse_Protection_Addon,Growth & Review,Cross-Sell,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,LOY_ADV_001,Advice_Slot_Booking,"Loyalty, Rewards & Access",Access to Advice,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,LOY_ADV_002,Expert_Session_Invite,"Loyalty, Rewards & Access",Access to Advice,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,LOY_BEN_001,Partner_Benefit_Wellness,"Loyalty, Rewards & Access",Exclusive Benefits,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W03,2024-W12; reasons=PASS_CAP|PASS_SCHEDULE"
+C005,LOY_BEN_002,HNI_Travel_Benefit,"Loyalty, Rewards & Access",Exclusive Benefits,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,LOY_EVT_001,Customer_Day_Invite,"Loyalty, Rewards & Access",Customer Day / Branch Events,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,LOY_EVT_002,Health_Day_RSVP,"Loyalty, Rewards & Access",Customer Day / Branch Events,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,LOY_MIL_001,Five_Year_Loyalty_Badge,"Loyalty, Rewards & Access",Loyalty Milestones,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,LOY_MIL_002,Loyalty_Appreciation_Call,"Loyalty, Rewards & Access",Loyalty Milestones,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,MAT_DAY_001,Maturity_Day_Celebration_Kit,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,MAT_DAY_002,Maturity_Day_Event_Invite,Maturity,Maturity Date,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,MAT_POST_001,Post_Maturity_Next_Steps,Maturity,Post-Maturity,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,MAT_POST_002,Post_Maturity_Reinvestment_Call,Maturity,Post-Maturity,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,MAT_T2_001,Maturity_Reinvestment_Preview,Maturity,T-2 & T-1 Months,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,MAT_T2_002,Maturity_Final_Call,Maturity,T-2 & T-1 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,MAT_T3_001,Maturity_T3_Goal_Nudge,Maturity,T-3 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,MAT_T3_002,Maturity_T3_Options_Snapshot,Maturity,T-3 Months,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,POL_BON_001,Bonus_Declaration_Explainer,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,POL_BON_002,Bonus_Appreciation_Call,Policy Journey,Bonus Declaration,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,POL_CLM_001,Claims_Guidance_Checklist,Policy Journey,Claims and Assistance,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W08; reasons=PASS_CAP|PASS_SCHEDULE
+C005,POL_CLM_002,Claim_Status_Update,Policy Journey,Claims and Assistance,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W09; reasons=PASS_CAP|PASS_SCHEDULE
+C005,POL_REN_001,Renewal_M2_Snapshot,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,POL_REN_002,Renewal_M1_Reminder,Policy Journey,Renewals,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,POL_SVC_001,Service_Checkin_Call,Policy Journey,Servicing Touchpoints,SCHEDULE,EXCLUDED,FAIL_GAP_SAME_THEME,Theme gap not met
+C005,POL_SVC_002,Quick_Service_Survey,Policy Journey,Servicing Touchpoints,SCHEDULE,INCLUDED,PASS_SCHEDULE,"weeks=2024-W01,2024-W10; reasons=PASS_CAP|PASS_SCHEDULE"
+C005,POL_UPD_001,Plan_at_a_Glance,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,POL_UPD_002,ULIP_Fund_Snapshot,Policy Journey,Policy Updates,SCHEDULE,EXCLUDED,FAIL_CATEGORY_CAP,Not scheduled
+C005,TRU_AWD_001,Awards_and_Recognition_Update,Trust & Touchpoints,Recognition & Awards,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,TRU_BTS_001,Humans_of_Edelweiss,Trust & Touchpoints,Behind-the-Scenes Stories,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,TRU_BTS_002,CSR_Impact_Reel,Trust & Touchpoints,Behind-the-Scenes Stories,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C005,TRU_TRN_001,Trust_in_Numbers_Digest,Trust & Touchpoints,Transparency Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W05; reasons=PASS_CAP|PASS_SCHEDULE
+C005,TRU_TRN_002,Where_Your_Premium_Goes,Trust & Touchpoints,Transparency Updates,SCHEDULE,INCLUDED,PASS_SCHEDULE,weeks=2024-W07; reasons=PASS_CAP|PASS_SCHEDULE

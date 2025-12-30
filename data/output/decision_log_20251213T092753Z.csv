@@ -1,0 +1,6 @@
+customer_id,activity_id,activity_name,category,sub_category,stage,result,reason_code,details
+C001,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-02,2024-03,2024-04,2024-05,2024-06,2024-07,2024-08; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
+C002,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_SAFARI,Safari persona not eligible
+C003,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C004,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,ELIGIBILITY,EXCLUDED,FAIL_LIFESTAGE,Life stage not eligible
+C005,ELL_FIN_002,Money_Minded_Mondays_Quiz,Everyday Life & Learning,Personal Finance,SCHEDULE,INCLUDED,PASS_SCHEDULE,"Included in months: 2024-01,2024-02,2024-03,2024-04,2024-05,2024-06,2024-07,2024-08; reasons: PASS_CAP|PASS_ELIGIBILITY|PASS_MODIFIER|PASS_SCHEDULE"
