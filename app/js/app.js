@@ -1170,8 +1170,8 @@ function validateOnboarding(showMessages=false) {
   req('contact','email','Email', contact.email);
   const cur = contact.currentAddress;
   ['line1','line2','city','state','pincode'].forEach(k => req('currentAddress', k, `Current ${k}`, cur[k]));
-  const perm = contact.permanentAddress.sameAsCurrent ? contact.currentAddress : contact.permanentAddress;
-  ['line1','line2','city','state','pincode'].forEach(k => req('permanentAddress', k, `Permanent ${k}`, perm[k]));
+  const permAddr = contact.permanentAddress.sameAsCurrent ? contact.currentAddress : contact.permanentAddress;
+  ['line1','line2','city','state','pincode'].forEach(k => req('permanentAddress', k, `Permanent ${k}`, permAddr[k]));
   const bank = ob.fields.bank;
   ['accountNumber','ifsc','bankName','branch'].forEach(k => req('bank', k, k, bank[k]));
   const nominee = ob.fields.nominee;
@@ -1188,7 +1188,7 @@ function validateOnboarding(showMessages=false) {
     bank: ['accountNumber','ifsc','bankName','branch'],
     nominee: ['name','relationship','dob','declarationAccepted']
   };
-  const perm = contact.permanentAddress.sameAsCurrent ? contact.currentAddress : contact.permanentAddress;
+  const perm = permAddr;
   const sectionValues = {
     personal: p,
     education: edu,
