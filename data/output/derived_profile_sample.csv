@@ -1,0 +1,6 @@
+CustomerID,CustomerName,Age,LifeStage,SafariPersona,PolicyVintage,RelationshipVintage,PremiumToIncomeBand,RenewalBucket,CityTier,OccupationType,KidsFlag,KidsAgeBand,PercentSurrenders,PreferredChannel
+C001,Amit Shah,35,Early Nester,Lion,1-3Y,3-5Y,Comfortable,37M,Metro,Unknown,Y,0-5,0.0,Call Centre
+C002,Rahul Mehta,30,Early Nester,Deer,5Y+,5Y+,Light,13M,Tier1,Unknown,Unsure,Unknown,0.0,Customer Portal
+C003,Sunita Iyer,41,Mature Nester,Elephant,3-5Y,3-5Y,Light,61+,Metro,Unknown,Y,0-5,0.0,Branch
+C004,Vikas Nair,46,Mature Nester,Lion,1-3Y,1-3Y,Light,49M,Tier3/4,Unknown,Unsure,Unknown,0.0,Email
+C005,Priya Singh,33,Early Nester,Hawk,5Y+,5Y+,Light,61+,Metro,Unknown,Unsure,Unknown,1.0,Call Centre

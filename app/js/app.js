@@ -225,8 +225,6 @@ function eligibilityStatus() {
   return { ok: true, reason: 'Eligible to proceed' };
 }
 
-// duplicate definitions removed
-
 function renderIntegrationRail() {
   const cards = [
     renderIntegrationCard('NSDL', 'PAN verified'),
@@ -1135,11 +1133,10 @@ async function handleBhNotify() {
 }
 
 async function handleSchedule() {
-  const modeBtn = document.querySelector('#modeSeg button.active');
-  const mode = modeBtn?.dataset.mode || 'TELEPHONIC';
+  const mode = store.candidate?.interview?.mode || 'TELEPHONIC';
   const date = document.getElementById('scheduleDate').value;
   const slot = document.getElementById('timeSlot').value;
-  const notes = document.getElementById('scheduleNotes').value;
+  const notes = '';
   if (!date || !slot) { alert('Pick date and time slot'); return; }
   const taskExisting = store.integrations.INTERVIEW_TASK || { key: 'INTERVIEW_TASK', attemptCount: 0 };
   updateIntegration('INTERVIEW_TASK', { ...taskExisting, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (taskExisting.attemptCount||0)+1, message: 'Scheduling...' });
@@ -1184,10 +1181,10 @@ async function updateInterviewStatusFlow(nextStatus) {
 
 async function recordOutcomeFlow() {
   const outcomeVal = document.getElementById('bhOutcome').value;
-  const reason = document.getElementById('bhReason').value;
   const notes = document.getElementById('bhNotes').value;
   if (!outcomeVal) { alert('Select an outcome'); return; }
-  const reasonText = reason ? document.querySelector('#bhReason option:checked')?.textContent : '';
+  const reasonText = '';
+  const reason = '';
   const taskExisting = store.integrations.INTERVIEW_TASK || { key: 'INTERVIEW_TASK', attemptCount: 0 };
   updateIntegration('INTERVIEW_TASK', { ...taskExisting, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (taskExisting.attemptCount||0)+1, message: 'Recording BH response' });
   render();
@@ -1202,6 +1199,7 @@ async function recordOutcomeFlow() {
   }
   ensureInterviewState();
   store.candidate.interviewOutcome = { outcome: outcomeVal, reasonCode: reason, reasonText, notes, receivedAt: res.receivedAt || new Date().toISOString() };
+  store.candidate.interview.status = INTERVIEW_STATUS.COMPLETED;
   updateIntegration('INTERVIEW_TASK', { status: STATUS.SUCCESS, message: 'Outcome captured', payload: res, nextRetryAt: null });
   pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'BH_OUTCOME_RECORDED', outcome: 'SUCCESS', details: res });
   render();
@@ -1325,8 +1323,8 @@ async function handleShareOnboarding(channel) {
   render();
   const res = await shareOnboardingForm({ candidateId: store.candidate.id, channel });
   if (res.failureType) {
-    ob.shareStatus.status = STATUS.FAILED;
     const scenario = getScenario('onboarding', 'ONBOARDING_SHARE_FAIL');
+    ob.shareStatus.status = STATUS.FAILED;
     ob.shareStatus.message = scenario?.userMessage || res.message;
     ob.history.push({ ts: new Date().toISOString(), actor: 'DM', type: 'ONBOARDING_SHARE_FAIL', outcome: 'FAIL', details: res });
     pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'ONBOARDING_SHARE_FAIL', outcome: 'FAIL', details: res });
