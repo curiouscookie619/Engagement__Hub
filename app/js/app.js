@@ -1,5 +1,5 @@
 import { store, initIntegration, pushHistory, setBanner, updateIntegration, ensureInterviewState, ensureOnboardingState, loadStore } from './store.js';
-import { STATUS, PERIODS, COMMISSION_RATE, CONVERSATIONS_PER_BUYER, MINUTES_PER_CONVERSATION, DAYS_PER_WEEK, INTERVIEW_STATUS, ONBOARDING_STATUS } from './constants.js';
+import { STATUS, PERIODS, COMMISSION_RATE, CONVERSATIONS_PER_BUYER, MINUTES_PER_CONVERSATION, DAYS_PER_WEEK, INTERVIEW_STATUS, ONBOARDING_STATUS, HELP_MAP } from './constants.js';
 import { navigate, setRenderer } from './router.js';
 import { validateMobile, cleanMobile, validatePan, validateEmail, formatTs, pretty, nextRetryTime } from './helpers.js';
 import {
@@ -37,6 +37,10 @@ const root = document.getElementById('root');
 const overlay = document.getElementById('shareOverlay');
 const shareStatus = document.getElementById('shareStatus');
 const closeShare = document.getElementById('closeShare');
+
+function getScenario(stage, code) {
+  return HELP_MAP?.[stage]?.[code] || null;
+}
 
 closeShare.addEventListener('click', () => {
   overlay.classList.remove('active');
@@ -83,30 +87,44 @@ function renderStageNav() {
   ];
   const allowOnboarding = store.candidate?.interviewOutcome?.outcome === 'PASS';
   const items = stages.map(s => {
-    const muted = s.id === 4 && !allowOnboarding;
-    return `<button class="stage-btn ${store.ui.screen === s.id ? 'active' : ''}" data-screen="${s.id}" ${muted ? 'aria-disabled="true"' : ''}>${s.label}</button>`;
+    const completed = store.ui.screen > s.id;
+    const gated = s.id === 4 && !allowOnboarding;
+    return `<button class="stage-btn ${store.ui.screen === s.id ? 'active' : ''} ${completed ? 'completed' : ''}" data-screen="${s.id}" ${gated ? 'aria-disabled="true"' : ''}>${completed ? '<span class="check">✔</span>' : '<span class="check"></span>'}<span>${s.label}</span></button>`;
   }).join('');
   return `<div class="stage-nav">${items}</div>`;
+}
+
+function integrationMeaning(key, payload) {
+  switch (key) {
+    case 'NSDL': return payload?.panValid ? 'PAN is valid and active' : 'PAN validity pending';
+    case 'IRDAI': return payload?.eligible ? 'No insurer conflicts found' : 'Not eligible with IRDAI';
+    case 'CKYC': return payload?.ckycFound ? 'CKYC profile found' : 'CKYC not found';
+    case 'DIGILOCKER': return payload?.available ? 'Documents available' : 'No DigiLocker docs';
+    default: return '';
+  }
 }
 
 function renderIntegrationCard(key, title) {
   const data = store.integrations[key] || { status: STATUS.NOT_STARTED };
   const status = data.status || STATUS.NOT_STARTED;
-  const badge = `<span class="badge ${status}">${status}</span>`;
-  const nextRetry = data.nextRetryAt ? `<span class="small">Next retry at ${formatTs(data.nextRetryAt)}</span>` : '';
-  const payload = data.payload && Object.keys(data.payload).length ? `<pre class="expandable">${pretty(data.payload)}</pre>` : '';
+  const badgeClass = status === STATUS.SUCCESS ? 'SUCCESS' : status === STATUS.FAILED ? 'FAILED' : status === STATUS.PARTIAL ? 'PARTIAL' : 'PENDING';
+  const badge = `<span class="badge ${badgeClass}">${badgeClass === 'FAILED' ? 'Attention' : badgeClass}</span>`;
+  const nextRetry = data.nextRetryAt ? `<span class="small">Retry at ${formatTs(data.nextRetryAt)}</span>` : '';
+  const meaning = integrationMeaning(key, data.payload);
+  const payload = data.payload && Object.keys(data.payload).length ? `<pre class="expandable">${pretty(data.payload)}</pre>` : '<div class="expandable">No technical details</div>';
   const retryBtn = status === STATUS.FAILED ? `<button class="btn btn-secondary" data-retry="${key}">Retry</button>` : '';
-  const msg = data.message || 'Awaiting response';
+  const helpBtn = status === STATUS.FAILED ? `<button class="btn btn-text" data-help-stage="profile" data-help-code="${key}">Need help?</button>` : '';
+  const msg = data.message || meaning || 'Waiting for response';
   return `<div class="card integration-card" data-card="${key}">
     <div class="card-header"><div class="card-title">${title}</div>${badge}</div>
     <div class="status-block">
-      <span><strong>Last attempt:</strong> ${formatTs(data.lastAttemptAt)}</span>
-      <span><strong>Message:</strong> ${msg}</span>
+      <span>${meaning || 'Will update once received.'}</span>
+      <span class="small">${msg}</span>
       ${nextRetry}
     </div>
-    <button class="btn btn-text" data-toggle="${key}">View details</button>
-    <div class="payload" style="display:none;">${payload || '<div class="expandable">No payload yet</div>'}</div>
-    <div style="margin-top:8px; display:flex; gap:8px;">${retryBtn}</div>
+    <button class="btn btn-text" data-toggle="${key}">View technical details</button>
+    <div class="payload" style="display:none;">${payload}</div>
+    <div style="margin-top:8px; display:flex; gap:8px;">${retryBtn}${helpBtn}</div>
   </div>`;
 }
 
@@ -150,11 +168,14 @@ async function handleIntegration(key, runner, payload) {
   try {
     const res = await runner(payload);
     if (res.failureType) {
+      const scenario = getScenario('profile', `${key}_FAIL`);
+      const msg = scenario?.userMessage || res.message || 'Failed';
       updateIntegration(key, {
         status: STATUS.FAILED,
         failureType: res.failureType,
-        message: res.message || 'Failed',
+        message: msg,
         payload: res,
+        nextRetryAt: res.failureType === 'SYSTEM' ? nextRetryTime(existing.attemptCount || 0) : null
       });
       pushHistory({ ts: new Date().toISOString(), actor: 'SYSTEM', type: `${key}_FAIL`, outcome: 'FAIL', details: res });
       if (res.failureType === 'SYSTEM' && (existing.attemptCount || 0) < 3) {
@@ -206,24 +227,36 @@ function eligibilityStatus() {
 
 function renderIntegrationRail() {
   const cards = [
-    renderIntegrationCard('NSDL', 'NSDL PAN Verification'),
-    renderIntegrationCard('IRDAI', 'IRDAI Eligibility'),
-    renderIntegrationCard('CKYC', 'CKYC Profile & Docs'),
-    renderIntegrationCard('DIGILOCKER', 'DigiLocker Docs'),
+    renderIntegrationCard('NSDL', 'PAN verified'),
+    renderIntegrationCard('IRDAI', 'IRDAI check'),
+    renderIntegrationCard('CKYC', 'CKYC details'),
+    renderIntegrationCard('DIGILOCKER', 'DigiLocker docs'),
   ].join('');
   return `<div class="integration-grid">${cards}</div>`;
+}
+
+function resolvedName() {
+  const c = store.candidate;
+  if (!c) return 'Name pending';
+  const ckycName = store.integrations.CKYC?.payload?.profile?.fullName;
+  if (ckycName && store.integrations.CKYC?.status === STATUS.SUCCESS) return ckycName;
+  if (c.name) return c.name;
+  const nsdlName = store.integrations.NSDL?.payload?.nameOnPan;
+  if (nsdlName) return nsdlName;
+  return 'Name pending';
 }
 
 function renderCandidateCard() {
   const c = store.candidate;
   if (!c) return '';
+  const name = resolvedName();
   return `<div class="card profile-card">
-    <div class="summary-line"><strong>${c.name || 'Name TBD'}</strong><span class="badge-block">Candidate Code <strong>${c.code}</strong></span></div>
+    <div class="summary-line"><strong>${name}</strong><span class="badge-block">Code <strong>${c.code}</strong> <button class="btn btn-text" id="copyCode" aria-label="Copy code">📋</button></span></div>
     <div class="table-ish">
       <span>Mobile</span><strong>${c.mobile}</strong>
       <span>PAN</span><strong>${c.pan}</strong>
       <span>Email</span><strong>${c.email || '-'}</strong>
-      <span>State</span><strong>${c.currentState}</strong>
+      <span>Current step</span><strong>${c.currentState || 'Verifying identity'}</strong>
     </div>
   </div>`;
 }
@@ -232,7 +265,7 @@ function renderScreen1() {
   const elig = eligibilityStatus();
   const banner = elig.ok ? `<div class="banner success">Eligible to proceed</div>` : `<div class="banner ${elig.reason.includes('Waiting') ? 'info' : 'error'}">${elig.reason}</div>`;
   const proceedDisabled = !elig.ok;
-  return `<div class="header"><h1>Profile build status</h1><p class="sub">Verifying details from official sources</p></div>
+  return `<div class="header"><h1>Verification progress</h1><p class="sub">Verifying identity with official sources</p></div>
     ${renderCandidateCard()}
     ${banner}
     ${renderIntegrationRail()}
@@ -298,7 +331,10 @@ function renderIncomeCard() {
       </div>
       <div>
         <label>Period</label>
-        <div class="segmented" id="periodSeg">${PERIODS.map(p => `<button data-period="${p}" class="${inc.earnPeriod===p?'active':''}">${p}</button>`).join('')}</div>
+        <div class="segmented" id="periodSeg">${PERIODS.map(p => {
+          const labels = { MONTHLY: 'Monthly', QUARTERLY: 'Quarterly', ANNUAL: 'Annual' };
+          return `<button data-period="${p}" class="${inc.earnPeriod===p?'active':''}">${labels[p]}</button>`;
+        }).join('')}</div>
       </div>
       <div>
         <label>Average Ticket Size (ATS)</label>
@@ -346,7 +382,6 @@ function renderScreen3() {
   const banner = bh && bh.status === STATUS.FAILED ? `<div class="banner error">${bh.message} <a href="#" id="refreshBh">Refresh mapping</a> or <a href="#">Contact support</a></div>` : '';
   const interview = store.candidate?.interview || {};
   const outcome = store.candidate?.interviewOutcome || {};
-  const ladder = [INTERVIEW_STATUS.SCHEDULED, INTERVIEW_STATUS.IN_PROGRESS, INTERVIEW_STATUS.COMPLETED];
   const proceedReady = outcome.outcome === 'PASS';
   const outcomeBanner = outcome.outcome === 'PASS'
     ? `<div class="banner success">Cleared to proceed</div>`
@@ -358,101 +393,48 @@ function renderScreen3() {
       <div class="status-line">
         <span>Name: ${bh?.payload?.bhName || '-'}</span>
         <span>Branch: ${bh?.payload?.branch || '-'}</span>
-        <span>Message: ${bh?.message || 'Pending'}</span>
         <span>Last attempt: ${formatTs(bh?.lastAttemptAt)}</span>
         ${bh?.nextRetryAt ? `<span class="small">Next retry at ${formatTs(bh.nextRetryAt)}</span>` : ''}
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><div class="card-title">Initiate interview task</div><span class="badge ${task?.status || STATUS.NOT_STARTED}">${task?.status || STATUS.NOT_STARTED}</span></div>
-      <p class="small">Creates task for BH and captures the indicative date.</p>
-      <div class="form-grid">
-        <div>
-          <label>Preferred interview date (indicative)</label>
-          <input type="date" id="interviewDate" value="${interview.date || ''}" />
-        </div>
-        <div>
-          <label>Notes (optional)</label>
-          <textarea id="notes" rows="3">${interview.notes || ''}</textarea>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="status-block">
-        <strong>Task status:</strong> <span class="badge ${task?.status || STATUS.NOT_STARTED}">${task?.status || STATUS.NOT_STARTED}</span>
-        <span>${task?.message || ''}</span>
-        <strong>Notification:</strong> <span class="badge ${notify?.status || STATUS.NOT_STARTED}">${notify?.status || STATUS.NOT_STARTED}</span>
-        ${notify?.nextRetryAt ? `<span class="small">Next retry at ${formatTs(notify.nextRetryAt)}</span>` : ''}
-      </div>
-      <div class="action-bar">
-        <button class="btn btn-primary" id="initiateInterview" ${!mappingOk ? 'disabled' : ''}>Initiate Career Interview</button>
-        <button class="btn btn-secondary" id="notifyBh" ${!mappingOk ? 'disabled' : ''}>Send notification to BH</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-title">Schedule / Reschedule</div><span class="badge ${interview.status === INTERVIEW_STATUS.NOT_SCHEDULED ? STATUS.NOT_STARTED : STATUS.SUCCESS}">${interview.status === INTERVIEW_STATUS.NOT_SCHEDULED ? STATUS.NOT_STARTED : STATUS.SUCCESS}</span></div>
+      <div class="card-header"><div class="card-title">Schedule interview</div><span class="badge ${task?.status || STATUS.NOT_STARTED}">${task?.status || STATUS.NOT_STARTED}</span></div>
+      <p class="small">DM initiates the schedule; BH will receive the request and confirm offline.</p>
       <div class="form-grid two">
         <div>
-          <label>Interview mode</label>
-          <div class="segmented" id="modeSeg">
-            <button data-mode="TELEPHONIC" class="${interview.mode === 'TELEPHONIC' ? 'active' : ''}">Telephonic</button>
-            <button data-mode="F2F" class="${interview.mode === 'F2F' ? 'active' : ''}">F2F</button>
-            <button data-mode="VIDEO" class="${interview.mode === 'VIDEO' ? 'active' : ''}">Video</button>
-          </div>
-        </div>
-        <div>
-          <label>Interview date</label>
+          <label>Preferred date</label>
           <input type="date" id="scheduleDate" value="${interview.date || ''}" />
         </div>
         <div>
-          <label>Preferred time slot</label>
+          <label>Time slot</label>
           <input id="timeSlot" placeholder="e.g., 10:00 - 11:00" value="${interview.slot || ''}" />
         </div>
-        <div>
-          <label>Notes to BH (optional)</label>
-          <textarea id="scheduleNotes" rows="2">${interview.notes || ''}</textarea>
-        </div>
       </div>
       <div class="status-line">
-        <span>Status: <strong>${interview.status || INTERVIEW_STATUS.NOT_SCHEDULED}</strong></span>
+        <span>Status: ${task?.message || task?.status || STATUS.NOT_STARTED}</span>
+        <span>Attempts: ${task?.attemptCount || 0}</span>
+        <span>Delivery receipt: ${notify?.status === STATUS.SUCCESS ? 'Acknowledged' : notify?.status === STATUS.FAILED ? 'Not delivered' : 'Pending'}</span>
+        ${notify?.lastAttemptAt ? `<span>Last notify: ${formatTs(notify.lastAttemptAt)}</span>` : ''}
+        ${task?.nextRetryAt ? `<span class="small">Auto-retry at ${formatTs(task.nextRetryAt)}</span>` : ''}
+      </div>
+      <div class="action-bar">
+        <button class="btn btn-primary" id="scheduleInterviewBtn" ${!mappingOk ? 'disabled' : ''}>Schedule interview</button>
+        <button class="btn btn-secondary" id="notifyBh" ${!mappingOk ? 'disabled' : ''}>Send notification</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Interview status</div></div>
+      <div class="status-line">
+        <span>Current: ${outcome.outcome ? 'Result received' : interview.status === INTERVIEW_STATUS.SCHEDULED ? 'Scheduled' : interview.status === INTERVIEW_STATUS.COMPLETED ? 'Completed' : 'Not scheduled'}</span>
         <span>Last updated: ${formatTs(interview.lastUpdatedAt)}</span>
+        <span>BH outcome: ${outcome.outcome ? `${outcome.outcome} (${formatTs(outcome.receivedAt)})` : 'Awaiting BH response'}</span>
       </div>
-      <div class="action-bar">
-        <button class="btn btn-primary" id="scheduleInterviewBtn" ${!mappingOk ? 'disabled' : ''}>Schedule / Reschedule</button>
-        <button class="btn btn-secondary" id="nudgeBh" ${!mappingOk ? 'disabled' : ''}>Send notification to BH</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-title">Interview progress</div></div>
-      <div class="timeline">
-        ${ladder.map(step => `<li class="${interview.status === step ? 'active-step' : ''}"><strong>${step.replace(/_/g,' ')}</strong>${interview.status === step ? ' (current)' : ''}</li>`).join('')}
-      </div>
-      <div class="status-line">
-        <span>Current: ${interview.status || INTERVIEW_STATUS.NOT_SCHEDULED}</span>
-        <span>Last touched: ${formatTs(interview.lastUpdatedAt)}</span>
-      </div>
-      <div class="action-bar">
-        <button class="btn btn-secondary" id="markInProgress" ${interview.status === INTERVIEW_STATUS.NOT_SCHEDULED ? 'disabled' : ''}>Mark In Progress</button>
-        <button class="btn btn-primary" id="markCompleted" ${interview.status !== INTERVIEW_STATUS.IN_PROGRESS ? 'disabled' : ''}>Mark Completed</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-title">BH outcome received</div></div>
       <div class="form-grid two">
         <div>
-          <label>Outcome</label>
+          <label>Outcome (from BH)</label>
           <select id="bhOutcome">
             <option value="">Select</option>
-            ${['PASS','FAIL','HOLD','REWORK'].map(o => `<option value="${o}" ${outcome.outcome === o ? 'selected' : ''}>${o}</option>`).join('')}
-          </select>
-        </div>
-        <div>
-          <label>Reason (for Fail / Rework)</label>
-          <select id="bhReason">
-            <option value="">--</option>
-            <option value="FIT">Fitment concerns</option>
-            <option value="DOCS">Documentation pending</option>
-            <option value="MOTIVATION">Motivation gap</option>
-            <option value="AVAILABILITY">Availability issue</option>
+            ${['PASS','FAIL'].map(o => `<option value="${o}" ${outcome.outcome === o ? 'selected' : ''}>${o}</option>`).join('')}
           </select>
         </div>
         <div>
@@ -460,30 +442,22 @@ function renderScreen3() {
           <textarea id="bhNotes" rows="2">${outcome.notes || ''}</textarea>
         </div>
       </div>
-      <div class="status-line">
-        <span>Last recorded: ${formatTs(outcome.receivedAt)}</span>
-        <span>${outcome.outcome ? `Outcome: ${outcome.outcome}` : 'Awaiting BH response'}</span>
-      </div>
-      <div style="margin-top:8px; display:flex; gap:8px;">
-        <button class="btn btn-primary" id="recordOutcome">Record BH Outcome</button>
+      <div class="action-bar">
+        <button class="btn btn-secondary" id="recordOutcome">Log BH outcome</button>
       </div>
     </div>
     <div class="card">
       <div class="card-header"><div class="card-title">Next step</div></div>
-      ${outcomeBanner || '<p class="small">Record BH outcome to unlock the next step.</p>'}
+      ${outcomeBanner || '<p class="small">Once BH confirms Pass, proceed to onboarding forms.</p>'}
       <div class="action-bar">
-        <button class="btn btn-primary" id="proceedOnboarding" ${outcome.outcome === 'PASS' ? '' : 'disabled'}>Proceed to OnBoarding (mandatory forms)</button>
-        <button class="btn btn-secondary" id="rescheduleFromOutcome" ${outcome.outcome && outcome.outcome !== 'PASS' ? '' : 'disabled'}>Reschedule interview</button>
-        <button class="btn btn-secondary" id="restartInterview" ${!outcome.outcome || outcome.outcome === 'PASS' ? 'disabled' : ''}>Restart interview flow</button>
-      </div>
-      <div class="status-line">
-        ${outcome.outcome && outcome.outcome !== 'PASS' ? '<span>Need a fresh attempt? Reschedule above.</span>' : '<span>Ensure BH response is captured.</span>'}
+        <button class="btn btn-primary" id="proceedOnboarding" ${outcome.outcome === 'PASS' ? '' : 'disabled'}>Proceed to Onboarding</button>
+        <button class="btn btn-secondary" id="openHelpInterview">Help</button>
       </div>
     </div>
     <div class="footer-spacer"></div>
     <div class="sticky-footer"><div class="content">
-      <button class="btn btn-secondary" id="footerToSchedule">Schedule / Update</button>
-      <button class="btn btn-primary" id="footerPrimary" ${proceedReady ? '' : ''}>${proceedReady ? 'Proceed to onboarding' : 'Record BH outcome'}</button>
+      <button class="btn btn-secondary" id="footerHelp">Help</button>
+      <button class="btn btn-primary" id="footerPrimary" ${proceedReady ? '' : 'disabled'}>${proceedReady ? 'Proceed to onboarding' : 'Waiting for BH outcome'}</button>
     </div></div>`;
 }
 
@@ -585,7 +559,7 @@ function renderOnboardingScreen() {
   const prefillDigi = ob.fetchStatus.digilocker;
   const editingLocked = ob.status === ONBOARDING_STATUS.SHARED_FOR_REVIEW;
   const lockFields = gated || editingLocked;
-  const banner = gated ? `<div class="banner error">Interview must be passed to proceed. Inputs are disabled.</div>` : '';
+  const banner = gated ? `<div class="banner error">Interview must be passed to proceed. Inputs are disabled. <button class="btn btn-text" id="helpOnboardingGate">Need help?</button></div>` : '';
   const shareSuccess = ob.status === ONBOARDING_STATUS.SHARED_FOR_REVIEW ? `<div class="banner success">Form shared with candidate for review.</div>` : '';
   const lockReason = editingLocked ? ' (locked after share)' : '';
   return `<div class="header"><h1>Onboarding</h1><p class="sub">Complete mandatory details and share with candidate for review</p></div>
@@ -596,8 +570,8 @@ function renderOnboardingScreen() {
       <div class="card-header"><div class="card-title">Fetch verified details</div></div>
       <p class="small">Use CKYC and DigiLocker to prefill verified data and reduce manual typing.</p>
       <div class="action-bar">
-        <button class="btn btn-secondary" id="fetchCkyc" ${gated || editingLocked ? 'disabled' : ''}>Fetch from CKYC</button>
-        <button class="btn btn-secondary" id="fetchDigi" ${gated || editingLocked ? 'disabled' : ''}>Fetch from DigiLocker</button>
+        <button class="btn btn-secondary" id="fetchCkyc" ${gated || editingLocked ? 'disabled' : ''}>Refresh CKYC data</button>
+        <button class="btn btn-secondary" id="fetchDigi" ${gated || editingLocked ? 'disabled' : ''}>Refresh DigiLocker data</button>
       </div>
       <div class="status-line">
         <span>CKYC: ${prefillCkyc.status} ${prefillCkyc.message ? '- '+prefillCkyc.message : ''}</span>
@@ -721,14 +695,85 @@ export function render() {
     case 4: html = renderOnboardingScreen(); break;
     default: html = '<p>Unknown screen</p>';
   }
-  root.innerHTML = `<div class="page-shell">${renderStageNav()}${html}</div>`;
+  const modal = store.ui.modal?.type === 'natEmail' ? renderNatEmailModal() : '';
+  const helpDrawer = renderHelpDrawer();
+  root.innerHTML = `<div class="page-shell">${renderStageNav()}${html}${modal}${helpDrawer}</div>`;
   bindEvents();
+}
+
+function renderNatEmailModal() {
+  return `<div class="overlay active" id="natModal">
+    <div class="modal">
+      <h3>Share NAT requires email</h3>
+      <p class="muted">NAT needs both SMS and Email delivery. Please add an email to proceed.</p>
+      <div style="margin:10px 0;"><label>Email</label><input id="natEmailInput" placeholder="name@email.com" /></div>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn btn-secondary" id="cancelNatModal">Cancel</button>
+        <button class="btn btn-primary" id="saveNatEmail">Save & continue</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderHelpDrawer() {
+  if (!store.ui.help) return '';
+  const { stage, errorCode } = store.ui.help;
+  const scenario = getScenario(stage, errorCode);
+  const tips = scenario?.tips || getHelpTips(stage, errorCode);
+  return `<div class="drawer active" id="helpDrawer">
+    <div class="drawer-header"><strong>Help / Troubleshooting</strong><button class="btn btn-text" id="closeHelp">Close</button></div>
+    ${scenario?.userMessage ? `<div class="help-tip"><strong>Issue:</strong> ${scenario.userMessage}</div>` : ''}
+    ${scenario?.whyRetry ? `<div class="help-tip"><strong>Why retry:</strong> ${scenario.whyRetry}</div>` : ''}
+    ${scenario?.retryScheduleText ? `<div class="help-tip"><strong>Next steps:</strong> ${scenario.retryScheduleText}</div>` : ''}
+    ${tips.map(t => `<div class="help-tip">${t}</div>`).join('')}
+    <a href="#" class="btn btn-secondary" id="raiseTicket">Raise support ticket</a>
+  </div>`;
 }
 
 function bindEvents() {
   document.querySelectorAll('.stage-btn').forEach(btn => {
-    btn.addEventListener('click', () => navigate(Number(btn.dataset.screen)));
+    btn.addEventListener('click', () => {
+      if (btn.getAttribute('aria-disabled') === 'true') return;
+      navigate(Number(btn.dataset.screen));
+    });
   });
+  document.querySelectorAll('[data-help-stage]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      store.ui.help = { stage: btn.dataset.helpStage, errorCode: btn.dataset.helpCode || 'general' };
+      render();
+    });
+  });
+  const copyCodeBtn = document.getElementById('copyCode');
+  copyCodeBtn?.addEventListener('click', async () => {
+    if (navigator?.clipboard?.writeText) {
+      await navigator.clipboard.writeText(store.candidate?.code || '');
+      setBanner('success', 'Candidate code copied');
+      render();
+    }
+  });
+  if (store.ui.modal?.type === 'natEmail') {
+    const modal = document.getElementById('natModal');
+    modal?.addEventListener('click', (e) => { if (e.target === modal) store.ui.modal = null, render(); });
+    document.getElementById('cancelNatModal')?.addEventListener('click', () => { store.ui.modal = null; render(); });
+    document.getElementById('saveNatEmail')?.addEventListener('click', async () => {
+      const input = document.getElementById('natEmailInput');
+      input.setCustomValidity('');
+      if (!validateEmail(input.value)) { input.setCustomValidity('Enter a valid email'); input.reportValidity(); return; }
+      store.candidate.email = input.value;
+      store.readiness.nat.emailCapturedViaModal = true;
+      store.ui.modal = null;
+      await document.getElementById('shareNat')?.click();
+    });
+  }
+  if (store.ui.help) {
+    document.getElementById('closeHelp')?.addEventListener('click', () => { store.ui.help = null; render(); });
+    document.getElementById('raiseTicket')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const ctx = store.ui.help;
+      const code = store.candidate?.code || 'NA';
+      alert(`Ticket placeholder\nStage: ${ctx?.stage}\nError: ${ctx?.errorCode}\nCandidate: ${code}`);
+    });
+  }
   if (store.ui.screen === 0) {
     const mobileEl = document.getElementById('mobile');
     const panEl = document.getElementById('pan');
@@ -800,6 +845,11 @@ function bindEvents() {
   }
   if (store.ui.screen === 2) {
     const sendNat = async () => {
+      if (!store.candidate?.email) {
+        store.ui.modal = { type: 'natEmail' };
+        render();
+        return;
+      }
       const integ = store.integrations.NAT_DELIVERY || { key: 'NAT_DELIVERY', attemptCount: 0 };
       updateIntegration('NAT_DELIVERY', { ...integ, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (integ.attemptCount||0)+1 });
       render();
@@ -811,11 +861,14 @@ function bindEvents() {
         pushHistory({ ts: new Date().toISOString(), actor: 'SYSTEM', type: 'NAT_SHARED', outcome: 'SUCCESS', details: res });
       } else {
         const failureType = res.failureType || 'SYSTEM';
-        updateIntegration('NAT_DELIVERY', { status: STATUS.FAILED, failureType, message: res.message || 'Failed', payload: res });
+        const scenario = getScenario('readiness', 'NAT_DELIVERY_FAIL');
+        const msg = scenario?.userMessage || res.message || 'Failed';
+        updateIntegration('NAT_DELIVERY', { status: STATUS.FAILED, failureType, message: msg, payload: res, nextRetryAt: failureType === 'SYSTEM' ? nextRetryTime(integ.attemptCount || 0) : null });
         store.readiness.nat.delivered = false;
         if (failureType === 'SYSTEM' && (integ.attemptCount || 0) < 3) {
           scheduleRetry('NAT_DELIVERY', integ.attemptCount || 0, () => sendNat());
         }
+        store.ui.help = { stage: 'readiness', errorCode: 'NAT_DELIVERY_FAIL' };
       }
       render();
     };
@@ -890,25 +943,8 @@ function bindEvents() {
   if (store.ui.screen === 3) {
     const refresh = document.getElementById('refreshBh');
     refresh?.addEventListener('click', (e) => { e.preventDefault(); ensureBhMapping(true); });
-    document.getElementById('initiateInterview').addEventListener('click', async () => {
-      const date = document.getElementById('interviewDate').value;
-      const notes = document.getElementById('notes').value;
-      if (!date) { alert('Select date'); return; }
-      await handleInterview(date, notes);
-    });
     document.getElementById('notifyBh')?.addEventListener('click', handleBhNotify);
     document.getElementById('scheduleInterviewBtn')?.addEventListener('click', handleSchedule);
-    document.getElementById('nudgeBh')?.addEventListener('click', handleBhNotify);
-    document.querySelectorAll('#modeSeg button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#modeSeg button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        ensureInterviewState();
-        store.candidate.interview.mode = btn.dataset.mode;
-      });
-    });
-    document.getElementById('markInProgress')?.addEventListener('click', () => updateInterviewStatusFlow(INTERVIEW_STATUS.IN_PROGRESS));
-    document.getElementById('markCompleted')?.addEventListener('click', () => updateInterviewStatusFlow(INTERVIEW_STATUS.COMPLETED));
     document.getElementById('recordOutcome')?.addEventListener('click', recordOutcomeFlow);
     document.getElementById('proceedOnboarding')?.addEventListener('click', () => {
       if (store.candidate?.interviewOutcome?.outcome !== 'PASS') return;
@@ -916,33 +952,21 @@ function bindEvents() {
       setBanner('success', 'Proceeding to onboarding forms.');
       navigate(4);
     });
-    document.getElementById('rescheduleFromOutcome')?.addEventListener('click', () => {
-      document.getElementById('scheduleCard')?.scrollIntoView({ behavior: 'smooth' });
-    });
-    document.getElementById('restartInterview')?.addEventListener('click', () => {
-      ensureInterviewState();
-      store.candidate.interview.status = INTERVIEW_STATUS.NOT_SCHEDULED;
-      store.candidate.interview.lastUpdatedAt = new Date().toISOString();
-      store.candidate.interviewOutcome = { outcome: null, reasonCode: null, reasonText: null, notes: '', receivedAt: null };
-      pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'INTERVIEW_RESTARTED', outcome: 'INFO', details: {} });
-      render();
-    });
-    document.getElementById('footerToSchedule')?.addEventListener('click', () => {
-      document.getElementById('scheduleCard')?.scrollIntoView({ behavior: 'smooth' });
-    });
+    document.getElementById('openHelpInterview')?.addEventListener('click', () => { store.ui.help = { stage: 'interview', errorCode: 'INTERVIEW_SCHEDULE_FAIL' }; render(); });
+    document.getElementById('footerHelp')?.addEventListener('click', () => { store.ui.help = { stage: 'interview', errorCode: 'INTERVIEW_SCHEDULE_FAIL' }; render(); });
     document.getElementById('footerPrimary')?.addEventListener('click', () => {
       if (store.candidate?.interviewOutcome?.outcome === 'PASS') {
         pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'PROCEED_ONBOARDING', outcome: 'INFO', details: { from: 'INTERVIEW' } });
         setBanner('success', 'Proceeding to onboarding forms.');
         navigate(4);
-      } else {
-        document.getElementById('recordOutcome')?.scrollIntoView({ behavior: 'smooth' });
       }
     });
   }
   if (store.ui.screen === 4) {
     ensureOnboardingState();
+    maybeAutoPrefill();
     const ob = store.candidate.onboarding;
+    document.getElementById('helpOnboardingGate')?.addEventListener('click', () => { store.ui.help = { stage: 'onboarding', errorCode: 'ONBOARDING_SHARE_FAIL' }; render(); });
     const simToggle = document.getElementById('toggleSim');
     const simBody = document.querySelector('.sim-body');
     simToggle?.addEventListener('click', () => {
@@ -1012,6 +1036,18 @@ function bindEvents() {
   }
 }
 
+function getHelpTips(stage, errorCode) {
+  const catalog = {
+    lead: ['Check contact details are correct before proceeding.', 'Temporary issues often clear on retry.'],
+    profile: ['If a check fails, wait for the auto-retry or use Retry now.', 'Confirm PAN and mobile are correct.'],
+    readiness: ['Ensure email is added before sharing NAT.', 'You can resend after correcting contact info.'],
+    interview: ['If scheduling fails, retry or contact support with BH details.', 'Confirm BH mapping is available.'],
+    onboarding: ['Use refresh to pull CKYC/DigiLocker again if missing.', 'Ensure required fields are filled before share.']
+  };
+  const list = catalog[stage] || ['Follow on-screen instructions and retry.'];
+  return list.map(t => `${t}${errorCode ? '' : ''}`);
+}
+
 function computeIncome() {
   const inc = store.readiness.incomePlan;
   const monthly = inc.earnPeriod === 'MONTHLY' ? inc.earnAmount : inc.earnPeriod === 'QUARTERLY' ? inc.earnAmount/3 : inc.earnAmount/12;
@@ -1026,6 +1062,21 @@ function computeIncome() {
   const hoursPerWeek = (minutesPerMonth/60)/4.33;
   const hoursPerDay = hoursPerWeek / DAYS_PER_WEEK;
   inc.derived = { monthly, monthlyPremiumNeeded, policiesPerMonth, premiumPerMonth, leadsPerMonth, leadsPerWeek, connectsPerMonth, hoursPerWeek: hoursPerWeek.toFixed(1), hoursPerDay: hoursPerDay.toFixed(1) };
+}
+
+function maybeAutoPrefill() {
+  if (store.ui.autoPrefillDone) return;
+  const ob = store.candidate?.onboarding;
+  if (!ob) return;
+  const ckycReady = store.integrations.CKYC?.status === STATUS.SUCCESS || store.integrations.CKYC?.status === STATUS.PARTIAL;
+  const digiReady = store.integrations.DIGILOCKER?.status === STATUS.SUCCESS || store.integrations.DIGILOCKER?.status === STATUS.PARTIAL;
+  if (ckycReady && ob.fetchStatus.ckyc.status === STATUS.NOT_STARTED) {
+    handlePrefill('ckyc', { auto: true });
+  }
+  if (digiReady && ob.fetchStatus.digilocker.status === STATUS.NOT_STARTED) {
+    handlePrefill('digi', { auto: true });
+  }
+  store.ui.autoPrefillDone = true;
 }
 
 async function ensureBhMapping(force=false) {
@@ -1082,21 +1133,22 @@ async function handleBhNotify() {
 }
 
 async function handleSchedule() {
-  const modeBtn = document.querySelector('#modeSeg button.active');
-  const mode = modeBtn?.dataset.mode || 'TELEPHONIC';
+  const mode = store.candidate?.interview?.mode || 'TELEPHONIC';
   const date = document.getElementById('scheduleDate').value;
   const slot = document.getElementById('timeSlot').value;
-  const notes = document.getElementById('scheduleNotes').value;
+  const notes = '';
   if (!date || !slot) { alert('Pick date and time slot'); return; }
   const taskExisting = store.integrations.INTERVIEW_TASK || { key: 'INTERVIEW_TASK', attemptCount: 0 };
   updateIntegration('INTERVIEW_TASK', { ...taskExisting, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (taskExisting.attemptCount||0)+1, message: 'Scheduling...' });
   render();
   const res = await scheduleInterview({ candidateId: store.candidate?.id, mode, date, slot, notes });
   if (res.failureType) {
-    updateIntegration('INTERVIEW_TASK', { status: STATUS.FAILED, failureType: res.failureType, message: res.message, payload: res });
+    const scenario = getScenario('interview', 'INTERVIEW_SCHEDULE_FAIL');
+    updateIntegration('INTERVIEW_TASK', { status: STATUS.FAILED, failureType: res.failureType, message: scenario?.userMessage || res.message, payload: res, nextRetryAt: res.failureType === 'SYSTEM' ? nextRetryTime(taskExisting.attemptCount || 0) : null });
     if (res.failureType === 'SYSTEM' && (taskExisting.attemptCount||0) < 3) {
       scheduleRetry('INTERVIEW_TASK', taskExisting.attemptCount||0, () => handleSchedule());
     }
+    store.ui.help = { stage: 'interview', errorCode: 'INTERVIEW_SCHEDULE_FAIL' };
     render();
     return;
   }
@@ -1129,10 +1181,10 @@ async function updateInterviewStatusFlow(nextStatus) {
 
 async function recordOutcomeFlow() {
   const outcomeVal = document.getElementById('bhOutcome').value;
-  const reason = document.getElementById('bhReason').value;
   const notes = document.getElementById('bhNotes').value;
   if (!outcomeVal) { alert('Select an outcome'); return; }
-  const reasonText = reason ? document.querySelector('#bhReason option:checked')?.textContent : '';
+  const reasonText = '';
+  const reason = '';
   const taskExisting = store.integrations.INTERVIEW_TASK || { key: 'INTERVIEW_TASK', attemptCount: 0 };
   updateIntegration('INTERVIEW_TASK', { ...taskExisting, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (taskExisting.attemptCount||0)+1, message: 'Recording BH response' });
   render();
@@ -1147,6 +1199,7 @@ async function recordOutcomeFlow() {
   }
   ensureInterviewState();
   store.candidate.interviewOutcome = { outcome: outcomeVal, reasonCode: reason, reasonText, notes, receivedAt: res.receivedAt || new Date().toISOString() };
+  store.candidate.interview.status = INTERVIEW_STATUS.COMPLETED;
   updateIntegration('INTERVIEW_TASK', { status: STATUS.SUCCESS, message: 'Outcome captured', payload: res, nextRetryAt: null });
   pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'BH_OUTCOME_RECORDED', outcome: 'SUCCESS', details: res });
   render();
@@ -1214,7 +1267,8 @@ function validateOnboarding(showMessages=false) {
   return { valid, errors };
 }
 
-async function handlePrefill(source) {
+async function handlePrefill(source, opts = {}) {
+  const auto = opts.auto || false;
   ensureOnboardingState();
   const ob = store.candidate.onboarding;
   const statusObj = ob.fetchStatus[source === 'ckyc' ? 'ckyc' : 'digilocker'];
@@ -1228,15 +1282,18 @@ async function handlePrefill(source) {
     ? await fetchCkycPrefill({ pan: store.candidate.pan, mobile: store.candidate.mobile })
     : await fetchDigiLockerPrefill({ mobile: store.candidate.mobile });
   if (res.failureType) {
+    const code = source === 'ckyc' ? 'CKYC_FAIL' : 'DIGILOCKER_FAIL';
+    const scenario = getScenario('profile', code);
     statusObj.status = STATUS.FAILED;
-    statusObj.message = res.message;
+    statusObj.message = scenario?.userMessage || res.message;
     ob.history.push({ ts: new Date().toISOString(), actor: 'DM', type: `${source.toUpperCase()}_PREFILL_FAIL`, outcome: 'FAIL', details: res });
     pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: `${source.toUpperCase()}_PREFILL_FAIL`, outcome: 'FAIL', details: res });
+    store.ui.help = { stage: source === 'ckyc' ? 'profile' : 'profile', errorCode: code };
     render();
     return;
   }
   statusObj.status = STATUS.SUCCESS;
-  statusObj.message = `${res.autoFilled} fields auto-filled`;
+  statusObj.message = `${res.autoFilled} fields auto-filled${auto ? ' (auto)' : ''}`;
   if (source === 'ckyc') {
     ob.fields.personal = { ...ob.fields.personal, ...res.personal };
     ob.fields.contact.currentAddress = { ...ob.fields.contact.currentAddress, ...res.address };
@@ -1266,10 +1323,12 @@ async function handleShareOnboarding(channel) {
   render();
   const res = await shareOnboardingForm({ candidateId: store.candidate.id, channel });
   if (res.failureType) {
+    const scenario = getScenario('onboarding', 'ONBOARDING_SHARE_FAIL');
     ob.shareStatus.status = STATUS.FAILED;
-    ob.shareStatus.message = res.message;
+    ob.shareStatus.message = scenario?.userMessage || res.message;
     ob.history.push({ ts: new Date().toISOString(), actor: 'DM', type: 'ONBOARDING_SHARE_FAIL', outcome: 'FAIL', details: res });
     pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'ONBOARDING_SHARE_FAIL', outcome: 'FAIL', details: res });
+    store.ui.help = { stage: 'onboarding', errorCode: 'ONBOARDING_SHARE_FAIL' };
     render();
     return;
   }

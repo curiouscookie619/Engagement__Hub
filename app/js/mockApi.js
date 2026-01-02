@@ -20,7 +20,8 @@ export const MOCK_FLAGS = {
   CKYC_PREFILL_PARTIAL: true,
   DIGILOCKER_PREFILL_FAIL: false,
   DIGILOCKER_PREFILL_PARTIAL: true,
-  ONBOARDING_SHARE_FAIL: false
+  ONBOARDING_SHARE_FAIL: false,
+  OUTCOME_RESULT_FAIL: false
 };
 
 export function loadFlagsFromQuery() {
@@ -42,7 +43,7 @@ export async function createCandidate({ mobile, pan, email }) {
     pan,
     email,
     name: null,
-    currentState: 'IDENTITY_RESOLUTION',
+    currentState: 'Verifying identity',
     waitingOn: 'SYSTEM',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -243,7 +244,8 @@ export async function recordInterviewOutcome({ candidateId, outcome, reasonCode,
     if (MOCK_FLAGS.OUTCOME_RECORD_FAIL) {
       return { failureType: 'SYSTEM', message: 'Outcome service error' };
     }
-    return { outcome, reasonCode, reasonText, notes, receivedAt: new Date().toISOString() };
+    const forcedOutcome = MOCK_FLAGS.OUTCOME_RESULT_FAIL ? 'FAIL' : outcome;
+    return { outcome: forcedOutcome, reasonCode, reasonText, notes, receivedAt: new Date().toISOString() };
   });
 }
 

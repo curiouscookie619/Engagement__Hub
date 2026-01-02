@@ -37,7 +37,8 @@ export const store = {
     banner: null,
     shareSheet: false,
     onboardingErrors: {},
-    onboardingSummary: false
+    onboardingSummary: false,
+    autoPrefillDone: false
   }
 };
 
@@ -204,6 +205,7 @@ export function resetStore() {
   store.history = [];
   store.ui.banner = null;
   store.ui.screen = 0;
+  store.ui.autoPrefillDone = false;
   persistStore();
 }
 
