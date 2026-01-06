@@ -1,0 +1,24 @@
+.status-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); }
+.integration-grid { display: grid; gap: 12px; }
+@media(min-width: 720px) { .integration-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+
+.segmented { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); background: #f8fafc; border-radius: 14px; overflow: hidden; border: 1px solid #dbeafe; }
+.segmented button { border: none; padding: 12px 10px; background: transparent; font-weight: 700; color: #6b7280; }
+.segmented button.active { background: #e0ecff; color: var(--primary); box-shadow: inset 0 0 0 1px rgba(3,78,162,0.18); }
+
+.share-options { display: grid; gap: 8px; }
+.share-options button { width: 100%; }
+
+.timeline { list-style: none; padding: 0; margin: 0; }
+.timeline li { padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 13px; color: var(--muted); }
+.timeline li.active-step { color: var(--text); font-weight: 700; }
+
+.stage-nav { position: sticky; top: 0; z-index: 5; background: var(--bg); display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; padding: 8px 4px 12px; overflow-x: auto; scrollbar-width: thin; }
+.stage-btn { border: 1px solid #dbeafe; border-radius: 14px; padding: 10px 8px; background: #f0f5ff; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; justify-content: center; min-width: 120px; color: var(--primary); }
+.stage-btn .check { display: inline-flex; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cbd5e1; align-items: center; justify-content: center; font-size: 12px; color: var(--primary); background: #fff; }
+.stage-btn.completed .check { border-color: #10b981; color: #10b981; }
+.stage-btn.active { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%); color: #fff; border-color: var(--primary); box-shadow: 0 10px 24px rgba(3,78,162,0.14); }
+.stage-btn.active .check { border-color: #fff; color: #fff; }
+
+.sim-card { opacity: 0.85; }
+.sim-body { grid-template-columns: 1fr 1fr; }
