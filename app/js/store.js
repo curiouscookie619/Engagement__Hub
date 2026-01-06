@@ -70,7 +70,9 @@ export function ensureOnboardingState() {
       education: 0,
       contact: 0,
       bank: 0,
-      nominee: 0
+      nominee: 0,
+      experience: 0,
+      exam: 0
     },
     fields: {
       personal: {
@@ -121,6 +123,16 @@ export function ensureOnboardingState() {
         relationship: '',
         dob: '',
         declarationAccepted: false
+      },
+      experience: {
+        years: '',
+        lastOrganization: '',
+        lastRole: ''
+      },
+      exam: {
+        preferredCity: '',
+        preferredSlot: '',
+        language: ''
       }
     },
     docs: {
@@ -136,6 +148,18 @@ export function ensureOnboardingState() {
     shareStatus: { status: STATUS.NOT_STARTED, lastSharedAt: null, channel: null, attempts: 0, message: '' },
     history: []
   };
+  store.candidate.onboarding.sectionsCompletion = {
+    personal: 0,
+    education: 0,
+    contact: 0,
+    bank: 0,
+    nominee: 0,
+    experience: 0,
+    exam: 0,
+    ...store.candidate.onboarding.sectionsCompletion
+  };
+  store.candidate.onboarding.fields.experience = store.candidate.onboarding.fields.experience || { years: '', lastOrganization: '', lastRole: '' };
+  store.candidate.onboarding.fields.exam = store.candidate.onboarding.fields.exam || { preferredCity: '', preferredSlot: '', language: '' };
   store.candidate.onboarding.docs.manual = store.candidate.onboarding.docs.manual || {};
   if (!store.candidate.onboarding.fields.contact.mobile && store.candidate.mobile) {
     store.candidate.onboarding.fields.contact.mobile = store.candidate.mobile;

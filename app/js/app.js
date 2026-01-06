@@ -468,14 +468,33 @@ function fieldError(section, key) {
 }
 
 function onboardingFieldsSummary(ob) {
-  const requiredCount = 22; // tally of all mandatory fields
-  const filled = Object.values(ob.fields.personal).filter(Boolean).length
-    + Object.values(ob.fields.education).filter(Boolean).length
-    + Object.values(ob.fields.contact.currentAddress).filter(Boolean).length
-    + Object.values(ob.fields.contact.permanentAddress).filter((v, k) => k !== 'sameAsCurrent').filter(Boolean).length
-    + Object.values(ob.fields.bank).filter(Boolean).length
-    + Object.values(ob.fields.nominee).filter(v => typeof v === 'boolean' ? v : Boolean(v)).length
-    - (ob.fields.contact.permanentAddress.sameAsCurrent ? 1 : 0);
+  const permAddr = ob.fields.contact.permanentAddress.sameAsCurrent ? ob.fields.contact.currentAddress : ob.fields.contact.permanentAddress;
+  const sectionChecks = {
+    personal: ['title','firstName','middleName','lastName','dob','gender','maritalStatus','category','relationTitle','relationName'],
+    education: ['qualification','institution','rollNumber','passingYear'],
+    contact: ['email', 'line1','line2','city','state','pincode','perm_line1','perm_line2','perm_city','perm_state','perm_pincode'],
+    bank: ['accountNumber','ifsc','bankName','branch'],
+    nominee: ['name','relationship','dob','declarationAccepted'],
+    experience: ['years','lastOrganization','lastRole'],
+    exam: ['preferredCity','preferredSlot','language']
+  };
+  const sectionValues = {
+    personal: ob.fields.personal,
+    education: ob.fields.education,
+    contact: { ...ob.fields.contact.currentAddress, ...permAddr, email: ob.fields.contact.email, perm_line1: permAddr.line1, perm_line2: permAddr.line2, perm_city: permAddr.city, perm_state: permAddr.state, perm_pincode: permAddr.pincode },
+    bank: ob.fields.bank,
+    nominee: ob.fields.nominee,
+    experience: ob.fields.experience,
+    exam: ob.fields.exam
+  };
+  const requiredCount = Object.values(sectionChecks).reduce((t, arr) => t + arr.length, 0);
+  let filled = 0;
+  Object.keys(sectionChecks).forEach(sec => {
+    sectionChecks[sec].forEach(key => {
+      const val = sectionValues[sec][key] !== undefined ? sectionValues[sec][key] : sectionValues[sec][key.replace('perm_','')];
+      if (val || val === true) filled += 1;
+    });
+  });
   return { filled, required: requiredCount, pending: Math.max(requiredCount - filled, 0) };
 }
 
@@ -531,6 +550,8 @@ function renderOnboardingSummary(ob) {
   const contact = ob.fields.contact;
   const bank = ob.fields.bank;
   const nominee = ob.fields.nominee;
+  const experience = ob.fields.experience;
+  const exam = ob.fields.exam;
   return `<div class="card">
     <div class="card-header"><div class="card-title">Review summary</div></div>
     <div class="table-ish">
@@ -561,6 +582,20 @@ function renderOnboardingSummary(ob) {
       <span>IFSC</span><strong>${bank.ifsc}</strong>
       <span>Bank</span><strong>${bank.bankName}</strong>
       <span>Branch</span><strong>${bank.branch}</strong>
+    </div>
+    <div class="divider"></div>
+    <div class="table-ish">
+      <span>Experience</span><strong>${experience.years} years</strong>
+      <span>Last Organization</span><strong>${experience.lastOrganization}</strong>
+      <span>Last Role</span><strong>${experience.lastRole}</strong>
+      <span>Past agency</span><strong>As & when applicable</strong>
+    </div>
+    <div class="divider"></div>
+    <div class="table-ish">
+      <span>Exam City</span><strong>${exam.preferredCity}</strong>
+      <span>Preferred Slot</span><strong>${exam.preferredSlot}</strong>
+      <span>Language</span><strong>${exam.language}</strong>
+      <span></span><strong></strong>
     </div>
     <div class="divider"></div>
     <div class="table-ish">
@@ -640,6 +675,19 @@ function renderOnboardingScreen() {
       </div>
     </div>
     <div class="card">
+      <div class="card-header"><div class="card-title">Work Experience</div></div>
+      <div class="form-grid two">
+        ${['years','lastOrganization','lastRole'].map(key => {
+          const labels = {years:'Total years of experience', lastOrganization:'Last organization', lastRole:'Last role'};
+          return `<div>
+            <label>${labels[key]}</label>
+            <input data-section="experience" data-field="${key}" value="${ob.fields.experience[key] || ''}" ${lockFields ? 'disabled' : ''}/>
+            ${fieldError('experience', key) ? `<div class="small" style="color:#b91c1c;">${fieldError('experience', key)}</div>` : ''}          
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="card">
       <div class="card-header"><div class="card-title">Contact & Address</div></div>
       <div class="form-grid two">
         <div>
@@ -664,6 +712,20 @@ function renderOnboardingScreen() {
       <div class="form-grid two">
         ${['line1','line2','city','state','pincode'].map(key => `<div><label>${key.toUpperCase()}</label><input data-section="permanentAddress" data-field="${key}" value="${ob.fields.contact.permanentAddress[key] || ''}" ${lockFields ? 'disabled' : ''}/> ${fieldError('permanentAddress', key) ? `<div class="small" style="color:#b91c1c;">${fieldError('permanentAddress', key)}</div>` : ''}</div>`).join('')}
       </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Exam Preferences</div></div>
+      <div class="form-grid two">
+        ${['preferredCity','preferredSlot','language'].map(key => {
+          const labels = {preferredCity:'Preferred city/center', preferredSlot:'Preferred slot/time', language:'Preferred language'};
+          return `<div>
+            <label>${labels[key]}</label>
+            <input data-section="exam" data-field="${key}" value="${ob.fields.exam[key] || ''}" ${lockFields ? 'disabled' : ''}/>
+            ${fieldError('exam', key) ? `<div class="small" style="color:#b91c1c;">${fieldError('exam', key)}</div>` : ''}          
+          </div>`;
+        }).join('')}
+      </div>
+      <p class="small">Past agency details: as & when applicable</p>
     </div>
     <div class="card">
       <div class="card-header"><div class="card-title">Bank Details${lockReason}</div></div>
@@ -1006,7 +1068,7 @@ function bindEvents() {
       inp.addEventListener('input', () => {
         const section = inp.dataset.section;
         const field = inp.dataset.field;
-        if (section === 'personal' || section === 'education' || section === 'bank') {
+        if (section === 'personal' || section === 'education' || section === 'bank' || section === 'experience' || section === 'exam') {
           ob.fields[section][field] = inp.value;
           if (section === 'bank' && field === 'ifsc' && inp.value.length >= 5) {
             ob.fields.bank.bankName = 'Mock Bank';
@@ -1277,13 +1339,19 @@ function validateOnboarding(showMessages=false) {
     errors.nominee = errors.nominee || {};
     errors.nominee.declarationAccepted = 'Please confirm declaration';
   }
+  const exp = ob.fields.experience;
+  ['years','lastOrganization','lastRole'].forEach(k => req('experience', k, k.replace(/([A-Z])/g,' $1'), exp[k]));
+  const exam = ob.fields.exam;
+  ['preferredCity','preferredSlot','language'].forEach(k => req('exam', k, k.replace(/([A-Z])/g,' $1'), exam[k]));
   const prevCompletion = { ...ob.sectionsCompletion };
   const sectionChecks = {
     personal: ['title','firstName','middleName','lastName','dob','gender','maritalStatus','category','relationTitle','relationName'],
     education: ['qualification','institution','rollNumber','passingYear'],
     contact: ['email', 'line1','line2','city','state','pincode','perm_line1','perm_line2','perm_city','perm_state','perm_pincode'],
     bank: ['accountNumber','ifsc','bankName','branch'],
-    nominee: ['name','relationship','dob','declarationAccepted']
+    nominee: ['name','relationship','dob','declarationAccepted'],
+    experience: ['years','lastOrganization','lastRole'],
+    exam: ['preferredCity','preferredSlot','language']
   };
   const perm = permAddr;
   const sectionValues = {
@@ -1291,7 +1359,9 @@ function validateOnboarding(showMessages=false) {
     education: edu,
     contact: { ...contact.currentAddress, ...perm, email: contact.email, perm_line1: perm.line1, perm_line2: perm.line2, perm_city: perm.city, perm_state: perm.state, perm_pincode: perm.pincode },
     bank,
-    nominee
+    nominee,
+    experience: exp,
+    exam
   };
   Object.keys(sectionChecks).forEach(sec => {
     const complete = sectionChecks[sec].every(key => {

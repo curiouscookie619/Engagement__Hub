@@ -69,7 +69,9 @@ export async function createCandidate({ mobile, pan, email }) {
         education: 0,
         contact: 0,
         bank: 0,
-        nominee: 0
+        nominee: 0,
+        experience: 0,
+        exam: 0
       },
       fields: {
         personal: {
@@ -107,6 +109,16 @@ export async function createCandidate({ mobile, pan, email }) {
           relationship: '',
           dob: '',
           declarationAccepted: false
+        },
+        experience: {
+          years: '',
+          lastOrganization: '',
+          lastRole: ''
+        },
+        exam: {
+          preferredCity: '',
+          preferredSlot: '',
+          language: ''
         }
       },
       docs: {
