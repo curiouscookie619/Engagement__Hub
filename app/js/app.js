@@ -1388,3 +1388,5 @@ async function handleShareOnboarding(channel) {
 // initial render
 setRenderer(render);
 render();
+
+

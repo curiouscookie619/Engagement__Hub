@@ -1,0 +1,61 @@
+customer_id,week_bucket,month_bucket,activity_id,category,sub_category,channel,owner_type,reason_codes
+C001,2024-W01,2024-01,TRU_BTS_002,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W02,2024-01,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W03,2024-01,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W04,2024-01,MAT_DAY_002,Maturity,Maturity Date,Email,Field,PASS_CAP|PASS_SCHEDULE
+C001,2024-W05,2024-01,COM_FEST_001,Community & Connections,Festivals & Celebrations,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W06,2024-02,COM_PROD_001,Community & Connections,Product Milestones,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W07,2024-02,COM_STO_001,Community & Connections,Customer Stories / Advocacy,Portal,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W08,2024-02,COM_STO_002,Community & Connections,Customer Stories / Advocacy,Portal,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W09,2024-02,TRU_AWD_001,Trust & Touchpoints,Recognition & Awards,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W10,2024-03,TRU_BTS_002,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W11,2024-03,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C001,2024-W12,2024-03,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W01,2024-01,TRU_BTS_001,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W02,2024-01,TRU_BTS_002,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W03,2024-01,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W04,2024-01,ELL_LRN_002,Everyday Life & Learning,Learning Community,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W05,2024-01,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W06,2024-02,ELL_LRN_002,Everyday Life & Learning,Learning Community,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W07,2024-02,LOY_EVT_002,"Loyalty, Rewards & Access",Customer Day / Branch Events,WhatsApp,Field,PASS_CAP|PASS_SCHEDULE
+C002,2024-W08,2024-02,TRU_BTS_001,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W09,2024-02,MAT_DAY_002,Maturity,Maturity Date,Email,Field,PASS_CAP|PASS_SCHEDULE
+C002,2024-W10,2024-03,ELL_LRN_002,Everyday Life & Learning,Learning Community,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W11,2024-03,TRU_BTS_002,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C002,2024-W12,2024-03,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W01,2024-01,TRU_BTS_001,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W02,2024-01,POL_BON_001,Policy Journey,Bonus Declaration,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W03,2024-01,POL_BON_002,Policy Journey,Bonus Declaration,Telecalling,CallCentre,PASS_CAP|PASS_SCHEDULE
+C003,2024-W04,2024-01,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W05,2024-01,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W06,2024-02,LOY_EVT_002,"Loyalty, Rewards & Access",Customer Day / Branch Events,WhatsApp,Field,PASS_CAP|PASS_SCHEDULE
+C003,2024-W07,2024-02,COM_CITY_001,Community & Connections,City Milestones,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W08,2024-02,TRU_BTS_001,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W09,2024-02,COM_FEST_001,Community & Connections,Festivals & Celebrations,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W10,2024-03,TRU_TRN_001,Trust & Touchpoints,Transparency Updates,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W11,2024-03,TRU_TRN_002,Trust & Touchpoints,Transparency Updates,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C003,2024-W12,2024-03,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W01,2024-01,TRU_BTS_002,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W02,2024-01,POL_BON_002,Policy Journey,Bonus Declaration,Telecalling,CallCentre,PASS_CAP|PASS_SCHEDULE
+C004,2024-W03,2024-01,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W04,2024-01,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W05,2024-01,MAT_DAY_002,Maturity,Maturity Date,Email,Field,PASS_CAP|PASS_SCHEDULE
+C004,2024-W06,2024-02,COM_FEST_001,Community & Connections,Festivals & Celebrations,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W07,2024-02,COM_PROD_001,Community & Connections,Product Milestones,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W08,2024-02,COM_STO_001,Community & Connections,Customer Stories / Advocacy,Portal,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W09,2024-02,TRU_AWD_001,Trust & Touchpoints,Recognition & Awards,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W10,2024-03,TRU_BTS_002,Trust & Touchpoints,Behind-the-Scenes Stories,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W11,2024-03,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C004,2024-W12,2024-03,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W01,2024-01,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W02,2024-01,ELL_LRN_002,Everyday Life & Learning,Learning Community,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W03,2024-01,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W04,2024-01,COM_FEST_001,Community & Connections,Festivals & Celebrations,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W05,2024-01,TRU_TRN_001,Trust & Touchpoints,Transparency Updates,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W06,2024-02,ELL_LRN_002,Everyday Life & Learning,Learning Community,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W07,2024-02,TRU_TRN_002,Trust & Touchpoints,Transparency Updates,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W08,2024-02,POL_CLM_001,Policy Journey,Claims and Assistance,Portal,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W09,2024-02,POL_CLM_002,Policy Journey,Claims and Assistance,Email,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W10,2024-03,POL_SVC_002,Policy Journey,Servicing Touchpoints,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W11,2024-03,ELL_LRN_002,Everyday Life & Learning,Learning Community,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
+C005,2024-W12,2024-03,LOY_BEN_001,"Loyalty, Rewards & Access",Exclusive Benefits,WhatsApp,Digital,PASS_CAP|PASS_SCHEDULE
