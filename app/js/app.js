@@ -1199,6 +1199,7 @@ async function handleSchedule() {
   store.candidate.interview = { ...store.candidate.interview, mode, date, slot, notes, status: INTERVIEW_STATUS.SCHEDULED, lastUpdatedAt: new Date().toISOString() };
   updateIntegration('INTERVIEW_TASK', { status: STATUS.SUCCESS, message: 'Interview scheduled', payload: res, nextRetryAt: null });
   pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'INTERVIEW_SCHEDULED', outcome: 'SUCCESS', details: res });
+  await handleBhNotify();
   render();
 }
 
@@ -1224,10 +1225,11 @@ async function updateInterviewStatusFlow(nextStatus) {
 
 async function recordOutcomeFlow() {
   const outcomeVal = document.getElementById('bhOutcome').value;
-  const reason = document.getElementById('bhReason').value;
+  const reasonEl = document.getElementById('bhReason');
+  const reason = reasonEl ? reasonEl.value : '';
   const notes = document.getElementById('bhNotes').value;
   if (!outcomeVal) { alert('Select an outcome'); return; }
-  const reasonText = reason ? document.querySelector('#bhReason option:checked')?.textContent : '';
+  const reasonText = reason && reasonEl ? document.querySelector('#bhReason option:checked')?.textContent : '';
   const taskExisting = store.integrations.INTERVIEW_TASK || { key: 'INTERVIEW_TASK', attemptCount: 0 };
   updateIntegration('INTERVIEW_TASK', { ...taskExisting, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (taskExisting.attemptCount||0)+1, message: 'Recording BH response' });
   render();
@@ -1388,5 +1390,3 @@ async function handleShareOnboarding(channel) {
 // initial render
 setRenderer(render);
 render();
-
-
