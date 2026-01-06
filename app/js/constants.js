@@ -24,6 +24,15 @@ export const ONBOARDING_STATUS = {
   SHARED_FOR_REVIEW: 'SHARED_FOR_REVIEW'
 };
 
+export const DOC_REQUIREMENTS = [
+  { category: 'Age Proof', options: ['PAN Card', 'Aadhaar Card', 'Voter ID', 'Birth Certificate'], sample: 'Blurred Aadhaar front/back sample' },
+  { category: 'Resident Proof', options: ['Bank Statement with Address', 'Voter ID'], sample: 'Bank statement with address highlighted' },
+  { category: 'Education Proof', options: ['XII Marksheet/Certificate', 'Graduation Marksheet/Certificate'], sample: 'Sample blurred marksheet pages' },
+  { category: 'Bank Proof', options: ['Cancelled Cheque', 'Passbook Copy'], sample: 'Cancelled cheque sample (blurred)' },
+  { category: 'Recent Photograph', options: ['Passport photo'], sample: 'Sample photo sizing/clarity' },
+  { category: 'Signature', options: ['Signature on white paper'], sample: 'Signature sample with both sides visible if needed' },
+];
+
 export const HELP_MAP = {
   lead: {
     NAT_EMAIL_MISSING: {

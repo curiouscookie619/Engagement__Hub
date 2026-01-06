@@ -126,7 +126,8 @@ export function ensureOnboardingState() {
     docs: {
       ckyc: [],
       digilocker: [],
-      missing: []
+      missing: [],
+      manual: {}
     },
     fetchStatus: {
       ckyc: { status: STATUS.NOT_STARTED, lastAttemptAt: null, attemptCount: 0, message: '' },
@@ -135,6 +136,7 @@ export function ensureOnboardingState() {
     shareStatus: { status: STATUS.NOT_STARTED, lastSharedAt: null, channel: null, attempts: 0, message: '' },
     history: []
   };
+  store.candidate.onboarding.docs.manual = store.candidate.onboarding.docs.manual || {};
   if (!store.candidate.onboarding.fields.contact.mobile && store.candidate.mobile) {
     store.candidate.onboarding.fields.contact.mobile = store.candidate.mobile;
   }

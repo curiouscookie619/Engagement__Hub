@@ -112,7 +112,8 @@ export async function createCandidate({ mobile, pan, email }) {
       docs: {
         ckyc: [],
         digilocker: [],
-        missing: []
+        missing: [],
+        manual: {}
       },
       fetchStatus: {
         ckyc: { status: STATUS.NOT_STARTED, lastAttemptAt: null, attemptCount: 0, message: '' },

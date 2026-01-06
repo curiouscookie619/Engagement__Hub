@@ -1,5 +1,5 @@
 import { store, initIntegration, pushHistory, setBanner, updateIntegration, ensureInterviewState, ensureOnboardingState, loadStore } from './store.js';
-import { STATUS, PERIODS, COMMISSION_RATE, CONVERSATIONS_PER_BUYER, MINUTES_PER_CONVERSATION, DAYS_PER_WEEK, INTERVIEW_STATUS, ONBOARDING_STATUS, HELP_MAP } from './constants.js';
+import { STATUS, PERIODS, COMMISSION_RATE, CONVERSATIONS_PER_BUYER, MINUTES_PER_CONVERSATION, DAYS_PER_WEEK, INTERVIEW_STATUS, ONBOARDING_STATUS, HELP_MAP, DOC_REQUIREMENTS } from './constants.js';
 import { navigate, setRenderer } from './router.js';
 import { validateMobile, cleanMobile, validatePan, validateEmail, formatTs, pretty, nextRetryTime } from './helpers.js';
 import {
@@ -224,6 +224,8 @@ function eligibilityStatus() {
   if (!irdai.payload.eligible) return { ok: false, reason: 'IRDAI not eligible' };
   return { ok: true, reason: 'Eligible to proceed' };
 }
+
+// duplicate definitions removed
 
 function renderIntegrationRail() {
   const cards = [
@@ -478,23 +480,48 @@ function onboardingFieldsSummary(ob) {
 }
 
 function renderDocChecklist(ob) {
-  const requiredDocs = ['PHOTO', 'ADDRESS_PROOF', 'EDUCATION_PROOF', 'BANK_PROOF'];
   const fromCkyc = ob.docs.ckyc || [];
   const fromDigi = ob.docs.digilocker || [];
-  const statusRow = (label, source) => {
-    const available = [...fromCkyc, ...fromDigi].find(d => d.type === label);
-    const status = available ? (available.available ? 'Available' : 'Partial') : 'Missing';
-    const sourceText = available ? `${available.source}` : 'Collect manually';
-    const viewLink = available?.link ? `<a href="${available.link}" target="_blank">View</a>` : '';
-    return `<div class="table-ish">
-      <span>${label.replace(/_/g,' ')}</span><strong>${status}</strong>
+  const manualDocs = ob.docs.manual || {};
+  const docTypeToCategory = {
+    PHOTO: 'Recent Photograph',
+    ADDRESS_PROOF: 'Resident Proof',
+    EDUCATION_PROOF: 'Education Proof',
+    BANK_PROOF: 'Bank Proof',
+    AADHAAR: 'Age Proof',
+    SIGNATURE: 'Signature'
+  };
+  const statusRow = (req) => {
+    const matches = [...fromCkyc, ...fromDigi].filter(d => docTypeToCategory[d.type] === req.category);
+    const manual = manualDocs[req.category];
+    let status = 'Missing';
+    let sourceText = 'Collect manually';
+    let viewLink = '';
+    if (manual?.uploaded) {
+      status = 'Uploaded';
+      sourceText = `Uploaded manually ${manual.uploadedAt ? `(${formatTs(manual.uploadedAt)})` : ''}`;
+    } else if (matches.length) {
+      const availableDoc = matches.find(d => d.available);
+      const doc = availableDoc || matches[0];
+      status = availableDoc ? 'Available' : 'Partial';
+      sourceText = doc.source || 'Auto-fetch';
+      viewLink = doc.link ? `<a href="${doc.link}" target="_blank">View</a>` : '';
+    }
+    const sampleText = req.sample?.replace(/"/g, '&quot;') || '';
+    return `<div class="table-ish doc-row">
+      <span>${req.category}<div class="small">Acceptable: ${req.options.join(', ')}</div></span><strong>${status}</strong>
       <span>Source</span><strong>${sourceText} ${viewLink}</strong>
+      <span>Actions</span>
+      <div class="action-bar">
+        <button class="btn btn-secondary" data-doc-upload="${req.category}" ${manual?.uploaded ? 'disabled' : ''}>${manual?.uploaded ? 'Uploaded' : 'Upload'}</button>
+        <button class="btn btn-text" data-doc-sample="${req.category}" data-sample="${sampleText}">Help (view sample)</button>
+      </div>
     </div>`;
   };
   return `<div class="card">
     <div class="card-header"><div class="card-title">Document checklist</div></div>
-    <p class="small">Availability only; uploads are not in scope for this prototype.</p>
-    ${requiredDocs.map(d => statusRow(d)).join('')}
+    <p class="small">If integrations are missing items, collect them manually from the candidate.</p>
+    ${DOC_REQUIREMENTS.map(statusRow).join('')}
   </div>`;
 }
 
@@ -1033,6 +1060,21 @@ function bindEvents() {
         await handleShareOnboarding(channel);
       });
     });
+    document.querySelectorAll('[data-doc-sample]')?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sample = btn.dataset.sample || 'Example reference not available.';
+        alert(`Sample for ${btn.dataset.docSample}:\n${sample}`);
+      });
+    });
+    document.querySelectorAll('[data-doc-upload]')?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.docUpload;
+        ob.docs.manual[category] = { uploaded: true, uploadedAt: new Date().toISOString() };
+        pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'DOC_UPLOADED_MANUAL', outcome: 'SUCCESS', details: { category } });
+        setBanner('success', `${category} marked as uploaded manually.`);
+        render();
+      });
+    });
   }
 }
 
@@ -1133,10 +1175,11 @@ async function handleBhNotify() {
 }
 
 async function handleSchedule() {
-  const mode = store.candidate?.interview?.mode || 'TELEPHONIC';
+  const modeBtn = document.querySelector('#modeSeg button.active');
+  const mode = modeBtn?.dataset.mode || 'TELEPHONIC';
   const date = document.getElementById('scheduleDate').value;
   const slot = document.getElementById('timeSlot').value;
-  const notes = '';
+  const notes = document.getElementById('scheduleNotes').value;
   if (!date || !slot) { alert('Pick date and time slot'); return; }
   const taskExisting = store.integrations.INTERVIEW_TASK || { key: 'INTERVIEW_TASK', attemptCount: 0 };
   updateIntegration('INTERVIEW_TASK', { ...taskExisting, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (taskExisting.attemptCount||0)+1, message: 'Scheduling...' });
@@ -1181,10 +1224,10 @@ async function updateInterviewStatusFlow(nextStatus) {
 
 async function recordOutcomeFlow() {
   const outcomeVal = document.getElementById('bhOutcome').value;
+  const reason = document.getElementById('bhReason').value;
   const notes = document.getElementById('bhNotes').value;
   if (!outcomeVal) { alert('Select an outcome'); return; }
-  const reasonText = '';
-  const reason = '';
+  const reasonText = reason ? document.querySelector('#bhReason option:checked')?.textContent : '';
   const taskExisting = store.integrations.INTERVIEW_TASK || { key: 'INTERVIEW_TASK', attemptCount: 0 };
   updateIntegration('INTERVIEW_TASK', { ...taskExisting, status: STATUS.PENDING, lastAttemptAt: new Date().toISOString(), attemptCount: (taskExisting.attemptCount||0)+1, message: 'Recording BH response' });
   render();
@@ -1199,7 +1242,6 @@ async function recordOutcomeFlow() {
   }
   ensureInterviewState();
   store.candidate.interviewOutcome = { outcome: outcomeVal, reasonCode: reason, reasonText, notes, receivedAt: res.receivedAt || new Date().toISOString() };
-  store.candidate.interview.status = INTERVIEW_STATUS.COMPLETED;
   updateIntegration('INTERVIEW_TASK', { status: STATUS.SUCCESS, message: 'Outcome captured', payload: res, nextRetryAt: null });
   pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'BH_OUTCOME_RECORDED', outcome: 'SUCCESS', details: res });
   render();
@@ -1323,8 +1365,8 @@ async function handleShareOnboarding(channel) {
   render();
   const res = await shareOnboardingForm({ candidateId: store.candidate.id, channel });
   if (res.failureType) {
-    const scenario = getScenario('onboarding', 'ONBOARDING_SHARE_FAIL');
     ob.shareStatus.status = STATUS.FAILED;
+    const scenario = getScenario('onboarding', 'ONBOARDING_SHARE_FAIL');
     ob.shareStatus.message = scenario?.userMessage || res.message;
     ob.history.push({ ts: new Date().toISOString(), actor: 'DM', type: 'ONBOARDING_SHARE_FAIL', outcome: 'FAIL', details: res });
     pushHistory({ ts: new Date().toISOString(), actor: 'DM', type: 'ONBOARDING_SHARE_FAIL', outcome: 'FAIL', details: res });
@@ -1346,3 +1388,5 @@ async function handleShareOnboarding(channel) {
 // initial render
 setRenderer(render);
 render();
+
+
